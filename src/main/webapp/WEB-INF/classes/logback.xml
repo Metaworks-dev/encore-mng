@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type
+        ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+		<encoder>
+			<pattern>%d %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+
+	<!-- ===================================== -->
+	<!-- log4jdbc settings                     -->
+	<!-- ===================================== -->
+	<!--                       development production -->
+	<!-- jdbc.connection     :     WARN       WARN    -->
+	<!-- jdbc.audit          :     WARN       WARN    -->
+	<!-- jdbc.sqlonly        :     WARN       WARN    -->
+	<!-- jdbc.sqltiming      :     INFO       WARN    -->
+	<!-- jdbc.resultset      :     WARN       WARN    -->
+	<!-- jdbc.resultsettable :     INFO       WARN    -->
+
+	<logger name="metaworks" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="metaworks.web.schedule" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="org.apache.commons.dbcp2" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="org.apache.commons" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+
+
+	<logger name="org.apache.commons.jexl2" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="org.apache.commons.dbcp2" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.connection" additivity="false">
+		<level value="WARN"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="jdbc.audit" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="org.apache.commons.dbcp2" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="WARN"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="WARN"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<!-- ===================================== -->
+	<!-- Possible Log Levels:                  -->
+	<!-- ===================================== -->
+	<!-- FATAL, ERROR, WARN, INFO, DEBUG, TRACE -->
+
+	<root>
+		<level value="INFO"/>
+		<appender-ref ref="console"/>
+	</root>
+
+</configuration>

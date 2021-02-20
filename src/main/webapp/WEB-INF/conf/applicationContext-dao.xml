@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<aop:config>
+		<aop:advisor pointcut="execution(* encore.web.service.*Service.*(..))" advice-ref="txAdvice" />
+	</aop:config>
+
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="call*" propagation="REQUIRED" />
+			<tx:method name="exec*" propagation="REQUIRED" />
+			<tx:method name="tx*" propagation="REQUIRED" />
+			<tx:method name="batch*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource" />
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+<!--	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+	<bean id="sqlSessionFactory" class="encore.web.dao.RefreshableSqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="interval" value="1000" />
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:/mybatis/mysql/*.xml" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" p:dataSource-ref="dataSource" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"
+	    p:driverClassName="${jdbc.driverClassName}"
+		p:url="${jdbc.url}" p:username="${jdbc.username}"
+		p:password="${jdbc.password}" p:maxIdle="${jdbc.conn.maxIdle}" />
+
+    <bean id="commonDao" class="encore.web.dao.CommonDaoImpl">
+    	<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+    </bean>
+
+	<bean id="codeData" class="encore.web.dao.CodeData">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+
+	<bean id="commonService" class="encore.web.service.CommonServiceImpl" depends-on="codeData">
+		<property name="commonDao" ref="commonDao" />
+		<property name="codeData" ref="codeData" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+</beans>
