@@ -130,19 +130,5 @@ Ext.define('Encore.mng.view.main.Main', {
             bind: {
                 html: '{loremIpsum}'
             }
-        }, {
-            title: 'Settings',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }, {
-            title: 'logout',
-            // onClick: function() {
-            //     console.log('onClick;');
-            //     window.location.replace('/logout.do');
-            // },
-            listeners: {
-                click: 'onConfirm'
-            }
         }]
 });

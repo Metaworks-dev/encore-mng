@@ -5,9 +5,10 @@ Ext.define('Encore.mng.view.main.MainController', {
         Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
     },
     onConfirm: function (choice) {
-        Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
-        if (choice === 'yes') {
-            window.location.replace('/logout.do');
-        }
+        Ext.Msg.confirm("로그아웃", "로그아웃 하시겠습니까?", function (btn) {
+            if (btn === 'yes') {
+                window.location.replace('/logout.do');
+            }
+        });
     }
 });
