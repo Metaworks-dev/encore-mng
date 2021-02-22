@@ -27,12 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * json 통신을 위한 컨트롤러이다.
- * 
- * @author hkwee
- * @since  2020-05-25
- */
 @Controller
 public class JsonDataController {
 

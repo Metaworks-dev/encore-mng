@@ -67,11 +67,40 @@ Ext.define('Encore.mng.view.main.Main', {
         }
     },
     tbar: [
-        '<b>Welcome ~~ </b>',
+        {
+            xtype: 'button',
+            text: 'Metanet Portal',
+            handler: function() {
+                window.open(
+                    'http://portal.metanet.co.kr',
+                    '_blank' // <- This is what makes it open in a new window.
+                )
+            }
+        },
+        {
+            xtype: 'button',
+            text: '전자결재',
+            handler: function() {
+                window.open(
+                    'https://metanet.sharepoint.com/sites/gwen-core/gw',
+                    '_blank' // <- This is what makes it open in a new window.
+                )
+            }
+        },
+        {
+            xtype: 'button',
+            text: '경비시스템',
+            handler: function() {
+                window.open(
+                    'http://exp.metanetict.co.kr/uat/uia/egovLoginUsr.do',
+                    '_blank' // <- This is what makes it open in a new window.
+                )
+            }
+        },
         '->',
         {
             xtype: 'button',
-            text: 'logout',
+            text: '로그아웃',
             handler: 'onConfirm'
         }
     ],

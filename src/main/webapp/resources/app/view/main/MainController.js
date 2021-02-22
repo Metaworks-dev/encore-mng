@@ -4,7 +4,6 @@ Ext.define('Encore.mng.view.main.MainController', {
     onItemSelected: function (sender, record) {
         Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
     },
-
     onConfirm: function (choice) {
         Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
         if (choice === 'yes') {
