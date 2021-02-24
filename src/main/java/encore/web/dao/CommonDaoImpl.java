@@ -47,6 +47,16 @@ public class CommonDaoImpl extends SqlSessionDaoSupport implements encore.web.da
 	 */
 	@Override
 	public Object getData(String sqlId, Map params) throws DataAccessException {
+		System.out.println(sqlId);
+		System.out.println(getSqlSession());
+//		Object obj = null;
+//		try {
+//			obj = getSqlSession().selectOne(sqlId, params);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return obj;
 		return getSqlSession().selectOne(sqlId, params);
 	}
 	

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 @Controller("loginInterceptor")
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-	private static final String USERID = "USERID";
+	private static final String EMAIL = "EMAIL";
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Handler) throws Exception {
@@ -39,9 +39,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		System.out.println("=======================================");
-		System.out.println(session.getAttribute(USERID) );
+		System.out.println(session.getAttribute(EMAIL) );
 		
-		if (session.getAttribute(USERID) == null) {
+		if (session.getAttribute(EMAIL) == null) {
 			throw new ModelAndViewDefiningException(new ModelAndView("/login"));
 		} 
 
@@ -53,11 +53,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		if (isNew) {			
-			CookieUtil.unsetCookie(response, USERID);			
+			CookieUtil.unsetCookie(response, EMAIL);
 		}
 		
-		if (session.getAttribute(USERID) == null) {			
-			CookieUtil.unsetCookie(response, USERID);			
+		if (session.getAttribute(EMAIL) == null) {
+			CookieUtil.unsetCookie(response, EMAIL);
 			throw new ModelAndViewDefiningException(new ModelAndView("/login"));
 		}
 		
@@ -80,23 +80,23 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		boolean isValid = true;
 		
-		if (session.getAttribute(USERID) == null) {			
-			CookieUtil.unsetCookie(response, USERID);
+		if (session.getAttribute(EMAIL) == null) {
+			CookieUtil.unsetCookie(response, EMAIL);
 			session.invalidate();
 			return false;
 		}
 		
-		if (CookieUtil.getCookie(request, USERID) == null) {			
-			CookieUtil.unsetCookie(response, USERID);
+		if (CookieUtil.getCookie(request, EMAIL) == null) {
+			CookieUtil.unsetCookie(response, EMAIL);
 			session.invalidate();			
 			return false;
 		}
 
-		isValid = CookieUtil.getCookie(request, USERID).equals((String) session.getAttribute(USERID));
+		isValid = CookieUtil.getCookie(request, EMAIL).equals((String) session.getAttribute(EMAIL));
 
 		// 세 값 중 하나라도 일치하지 않을 경우, 쿠키와 세션을 모두 초기화한다.
 		if (!isValid) {			
-			CookieUtil.unsetCookie(response, USERID);
+			CookieUtil.unsetCookie(response, EMAIL);
 			session.invalidate();
 		}
 

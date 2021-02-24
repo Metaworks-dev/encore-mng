@@ -24,12 +24,16 @@
     <form id="login-form" action="${pageContext.request.contextPath}/loginProc" method="post" role="form" style="display: block;">
     <div class="flex-container">
         <div class="auth-body">
+<%--            <%= request.get%>--%>
             <div class="auth-title">EN-CORE Management</div>
+            <c:if test="${!errorMsg}">
+                <div class="auth-error">${errorMsg}</div>
+            </c:if>
             <div class="form-group auth-form">
-                <input type="text" name="USERID" id="userid" tabindex="1" class="form-control" placeholder="Email" value="exospace" required autofocus>
+                <input type="text" name="EMAIL" id="EMAIL" tabindex="1" class="form-control" placeholder="Email" value="hkwee@en-core.com" required autofocus>
             </div>
             <div class="form-group auth-form">
-                <input type="password" name="PASSWORD" id="passwd" tabindex="2" class="form-control" placeholder="Password" value="7114" required>
+                <input type="password" name="PASSWD" id="PASSWD" tabindex="2" class="form-control" placeholder="Password" value="7114" required>
             </div>
             <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control auth-form btn btn-info" value="Login">
         </div>

@@ -71,6 +71,8 @@ public class CommonServiceImpl implements encore.web.service.CommonService, Appl
      */
     @Override
     public Object getData(String sqlId, Map params) throws DataAccessException {
+        System.out.println(commonDao);
+
         return commonDao.getData(sqlId, params);
     }
 

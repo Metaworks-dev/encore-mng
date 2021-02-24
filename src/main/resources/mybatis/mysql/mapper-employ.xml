@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="employ">
+
+	<select id="getEmpList" parameterType="hashmap" resultType="hashmap">
+		SELECT /* employ.getEmpList */
+		       EMP_ID, EMP_NO, EMAIL, PASSWD, EMP_NM, MNG_LVL, ENT_DT, REG_DTM, MOD_DTM
+		  FROM TB_EMP
+		 WHERE 1 = 1
+		<if test="EMP_ID != null">
+		   AND EMP_ID = #{EMP_ID}
+		</if>
+		<if test="EMP_NM != null">
+			AND EMP_NM LIKE CONCAT('%', #{EMP_NM}, '%')
+		</if>
+		<if test="EMAIL != null">
+			AND EMAIL = #{EMAIL}
+		    AND PASSWD = #{PASSWD}
+		</if>
+         ORDER BY EMP_ID DESC
+		<if test="start != null">
+		limit #{start}, #{limit}
+		</if>
+	</select>
+
+	<select id="getEmpListCnt" parameterType="hashmap" resultType="int">
+		SELECT /* employ.getEmpListCnt */
+		COUNT(*)
+		FROM TB_EMP
+		WHERE 1 = 1
+		<if test="EMP_ID != null">
+			AND EMP_ID = #{EMP_ID}
+		</if>
+		<if test="EMAIL != null">
+			AND EMAIL = #{EMAIL}
+			AND PASSWD = #{PASSWD}
+		</if>
+	</select>
+
+	<insert id="insertEmp" parameterType="hashmap">
+		INSERT /* employ.insertEmp */
+		  INTO TB_EMP
+			(EMP_NO, EMAIL, PASSWD, EMP_NM, MNG_LVL, ENT_DT, REG_DTM, MOD_DTM)
+		VALUES
+			(#{EMP_NO}, #{EMAIL}, #{PASSWD}, #{EMP_NM}, #{MNG_LVL}, #{ENT_DT}, NOW(), NOW())
+	</insert>
+	
+	<update id="updateEmp" parameterType="hashmap">
+		UPDATE /* employ.updateEmp */
+			   TB_EMP
+		   SET EMAIL = IFNULL(#{EMAIL}, EMAIL)
+		      ,PASSWD = IFNULL(#{PASSWD}, PASSWD)
+		      ,EMP_NM = IFNULL(#{EMP_NM}, EMP_NM)
+		      ,EMP_NO = IFNULL(#{EMP_NO}, EMP_NO)
+		      ,MNG_LVL = IFNULL(#{MNG_LVL}, MNG_LVL)
+			  ,ENT_DT = IFNULL(#{ENT_DT}, ENT_DT)
+		      ,MOD_DTM = NOW()
+		 WHERE 1 = 1
+		   AND EMP_ID = #{EMP_ID}
+	</update>
+
+	<delete id="deleteEmp" parameterType="hashmap">
+		DELETE /* employ.deleteEmp */
+			   TB_EMP
+		 WHERE 1 = 1
+		   AND EMP_ID = #{EMP_ID}
+	</delete>
+</mapper>
+
+

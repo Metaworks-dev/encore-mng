@@ -51,13 +51,13 @@
     	<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
     </bean>
 
-	<bean id="codeData" class="encore.web.dao.CodeData">
-		<property name="commonDao" ref="commonDao" />
-	</bean>
+<!--	<bean id="codeData" class="encore.web.dao.CodeData">-->
+<!--		<property name="commonDao" ref="commonDao" />-->
+<!--	</bean>-->
 
-	<bean id="commonService" class="encore.web.service.CommonServiceImpl" depends-on="codeData">
+	<bean id="commonService" class="encore.web.service.CommonServiceImpl">
 		<property name="commonDao" ref="commonDao" />
-		<property name="codeData" ref="codeData" />
+<!--		<property name="codeData" ref="codeData" />-->
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 

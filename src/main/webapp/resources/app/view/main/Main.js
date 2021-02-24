@@ -5,10 +5,11 @@ Ext.define('Encore.mng.view.main.Main', {
     requires: [
         'Ext.plugin.Viewport',
         'Ext.window.MessageBox',
-
         'Encore.mng.view.main.MainController',
         'Encore.mng.view.main.MainModel',
-        'Encore.mng.view.main.List'
+        'Encore.mng.view.dashboard.Dashboard',
+        'Encore.mng.view.project.Project',
+        'Encore.mng.view.employ.Employ',
     ],
 
     controller: 'main',
@@ -20,6 +21,7 @@ Ext.define('Encore.mng.view.main.Main', {
     titleRotation: 0,
     tabRotation: 0,
 
+    layout: 'border',
     header: {
         layout: {
             align: 'stretchmax'
@@ -51,7 +53,7 @@ Ext.define('Encore.mng.view.main.Main', {
     },
 
     defaults: {
-        bodyPadding: 20,
+        bodyPadding: 10,
         tabConfig: {
             responsiveConfig: {
                 wide: {
@@ -70,7 +72,7 @@ Ext.define('Encore.mng.view.main.Main', {
         {
             xtype: 'button',
             text: 'Metanet Portal',
-            handler: function() {
+            handler: function () {
                 window.open(
                     'http://portal.metanet.co.kr',
                     '_blank' // <- This is what makes it open in a new window.
@@ -80,7 +82,7 @@ Ext.define('Encore.mng.view.main.Main', {
         {
             xtype: 'button',
             text: '전자결재',
-            handler: function() {
+            handler: function () {
                 window.open(
                     'https://metanet.sharepoint.com/sites/gwen-core/gw',
                     '_blank' // <- This is what makes it open in a new window.
@@ -90,7 +92,7 @@ Ext.define('Encore.mng.view.main.Main', {
         {
             xtype: 'button',
             text: '경비시스템',
-            handler: function() {
+            handler: function () {
                 window.open(
                     'http://exp.metanetict.co.kr/uat/uia/egovLoginUsr.do',
                     '_blank' // <- This is what makes it open in a new window.
@@ -107,28 +109,38 @@ Ext.define('Encore.mng.view.main.Main', {
     items: [
         {
             title: 'Dashboard',
-            // iconCls: 'fa-home',
-            // The following grid shares a store with the classic version's grid as well!
+            layout: 'border',
             items: [
                 {
-                    xtype: 'mainlist'
+                    xtype: 'dashboard',
+                    region: 'center'
                 }]
         }, {
             title: '프로젝트 관리',
+            layout: 'border',
             items: [
                 {
-                    xtype: 'project'
-                }]
+                    xtype: 'project',
+                    region: 'center'
+                }
+            ]
         }, {
             title: '직원 관리',
+            layout: 'border',
             items: [
                 {
-                    xtype: 'employ'
-                }]
+                    xtype: 'employ',
+                    region: 'center'
+                }
+            ]
         }, {
             title: '투입공수',
-            bind: {
-                html: '{loremIpsum}'
-            }
+            layout: 'border',
+            items: [
+                {
+                    xtype: 'work',
+                    region: 'center'
+                }
+            ]
         }]
 });

@@ -1,15 +1,16 @@
-Ext.define('Encore.mng.view.employ.Employ', {
+Ext.define('Encore.mng.view.work.Work',{
     extend: 'Ext.panel.Panel',
-    alias: 'widget.employ',
+    alias: 'widget.work',
     requires: [
-        'Encore.mng.view.employ.EmployController',
-        'Encore.mng.view.employ.EmployModel'
+        'Encore.mng.view.work.WorkController',
+        'Encore.mng.view.work.WorkModel'
     ],
-    controller: 'employ-employ',
+
+    controller: 'work-work',
     viewModel: {
-        type: 'employ-employ'
+        type: 'work-work'
     },
-    title: '직원 관리',
+    title: '투입공수 관리',
     layout: 'border',
     items: [
         {
