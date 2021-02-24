@@ -2,96 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
 
-	<select id="getUUID" resultType="string">
-		SELECT UUID()
-	</select>
-	
-	<select id="getDbConnList" parameterType="hashmap" resultType="hashmap">
-		SELECT /* common.getDbConnList */ 
-		       USER_UID, DB_CONN_UID, DB_CONN_NM, DB_TYPE_CD, USERNAME, PASSWORD, HOSTNAME, PORT
-		      ,DB_CONN_TYPE_CD, DB_NM, DB_CONN_ROLE_CD
-		      ,DB_CONN_NM as tree_order
-		      ,'icon-db' as "iconCls"
-		  FROM TB_DB_CONN_I
-		 WHERE 1 = 1
-		 <if test="DB_CONN_UID != null">
-		   AND DB_CONN_UID = #{DB_CONN_UID}
-		 </if>
-		 
-		 <if test="USER_UID != null">
-		   AND USER_UID = #{USER_UID}
-		 </if>		 
-		 ORDER BY tree_order
-	</select>
-	
-	<select id="getDbConnTreeList" parameterType="hashmap" resultType="hashmap">
-		SELECT /* common.getDbConnTreeList */ 
-		       DB_CONN_UID id, DB_CONN_NM text, USER_UID, DB_CONN_UID, DB_CONN_NM, DB_TYPE_CD, USERNAME, PASSWORD, HOSTNAME, PORT
-		      ,DB_CONN_TYPE_CD, DB_NM, DB_CONN_ROLE_CD
-		      ,'false' LEAF
-		  FROM TB_DB_CONN_I
-		 WHERE 1 = 1
-		 <if test="DB_CONN_UID != null">
-		   AND DB_CONN_UID = #{DB_CONN_UID}
-		 </if>
-		 ORDER BY REG_DTM
-	</select>	
-	
-	<select id="getDbCatalogList" parameterType="hashmap" resultType="hashmap">
-	   SELECT 'TABLES' text, 'true' LEAF FROM TB_DUAL
-	   UNION ALL
-	   SELECT 'TABLES' text, 'true' LEAF FROM TB_DUAL
-	</select>
-	
-	<insert id="insertDbConn" parameterType="hashmap">
-		INSERT INTO TB_DB_CONN_I (USER_UID, DB_CONN_UID, DB_CONN_NM, DB_TYPE_CD, USERNAME, PASSWORD
-		                         ,HOSTNAME, PORT, DB_CONN_TYPE_CD, DB_NM, DB_CONN_ROLE_CD, REG_DTM)
-                          VALUES (#{USER_UID}, uuid(), #{DB_CONN_NM}, #{DB_TYPE_CD}, #{USERNAME}, #{PASSWORD}
-                                 ,#{HOSTNAME}, #{PORT}, #{DB_CONN_TYPE_CD}, #{DB_NM}, #{DB_CONN_ROLE_CD}, NOW())
-	</insert>
-	
-	<update id="updateDbConn" parameterType="hashmap">
-		UPDATE /* conn.updateDbConn */ 
-		       TB_DB_CONN_I 
-		   SET DB_TYPE_CD      = IFNULL(#{DB_TYPE_CD}, DB_TYPE_CD)
-		      ,DB_CONN_NM      = IFNULL(#{DB_CONN_NM}, DB_CONN_NM)
-		      ,USERNAME        = IFNULL(#{USERNAME}, USERNAME)
-		      ,PASSWORD        = IFNULL(#{PASSWORD}, PASSWORD)
-		      ,HOSTNAME        = IFNULL(#{HOSTNAME}, HOSTNAME)
-		      ,PORT            = IFNULL(#{PORT}, PORT)
-		      ,DB_CONN_TYPE_CD = IFNULL(#{DB_CONN_TYPE_CD}, DB_CONN_TYPE_CD)
-		      ,DB_NM           = IFNULL(#{DB_NM}, DB_NM)
-		      ,DB_CONN_ROLE_CD = IFNULL(#{DB_CONN_ROLE_CD}, DB_CONN_ROLE_CD)
-		      ,MOD_DTM         = NOW()
-		 WHERE 1 = 1
-		   AND DB_CONN_UID = #{DB_CONN_UID}  
-	</update>
-	
-	<update id="deleteDbConn" parameterType="hashmap">
-		DELETE /* conn.deleteDbConn */
-		  FROM TB_DB_CONN_I
-		 WHERE 1 = 1
-		   AND DB_CONN_UID = #{DB_CONN_UID}  
-	</update>	
-	
-	<select id="getUserid" parameterType="hashmap" resultType="hashmap">
-		SELECT /* conn.getUserid */ 
-		       USER_UID, USERID, PASSWORD
-		  FROM TB_USER
-		 WHERE 1 = 1
-		   AND USERID= #{USERID}
-	</select>	
-	
-	<select id="getTestSql" resultType="string">
-		SELECT 'metaworks' FROM DUAL
+	<select id="getProjList" parameterType="hashmap" resultType="hashmap">
+		SELECT /* project.getProjList */
+		PROJ_ID, PROJ_NO, EMAIL, PASSWD, PROJ_NM, MNG_LVL, ENT_DT, REG_DTM, MOD_DTM
+		FROM TB_PROJ
+		WHERE 1 = 1
+		<if test="PROJ_ID != null">
+			AND PROJ_ID = #{PROJ_ID}
+		</if>
+		<if test="PROJ_NM != null">
+			AND PROJ_NM LIKE CONCAT('%', #{PROJ_NM}, '%')
+		</if>
+		<if test="EMAIL != null">
+			AND EMAIL = #{EMAIL}
+			AND PASSWD = #{PASSWD}
+		</if>
+		ORDER BY PROJ_ID DESC
+		<if test="start != null">
+			limit #{start}, #{limit}
+		</if>
 	</select>
 
-	<select id="getCodeList" parameterType="hashmap" resultType="hashmap">
-		SELECT CD, CD_VAL, CD_DESC, ORD_SEQ, USE_YN, PAR_CD
-		  FROM TB_COMMON_CD
-		 ORDER BY PAR_CD, ORD_SEQ, CD_VAL
+	<select id="getProjListCnt" parameterType="hashmap" resultType="int">
+		SELECT /* project.getProjListCnt */
+		COUNT(*)
+		FROM TB_PROJ
+		WHERE 1 = 1
+		<if test="PROJ_ID != null">
+			AND PROJ_ID = #{PROJ_ID}
+		</if>
+		<if test="EMAIL != null">
+			AND EMAIL = #{EMAIL}
+			AND PASSWD = #{PASSWD}
+		</if>
 	</select>
-		
+
+	<insert id="insertProj" parameterType="hashmap">
+		INSERT /* project.insertProj */
+		INTO TB_PROJ
+			(PROJ_NO, EMAIL, PASSWD, PROJ_NM, MNG_LVL, ENT_DT, REG_DTM, MOD_DTM)
+		VALUES
+		(#{PROJ_NO}, #{EMAIL}, #{PASSWD}, #{PROJ_NM}, #{MNG_LVL}, #{ENT_DT}, NOW(), NOW())
+	</insert>
+
+	<update id="updateProj" parameterType="hashmap">
+		UPDATE /* project.updateProj */
+			TB_PROJ
+		SET EMAIL = IFNULL(#{EMAIL}, EMAIL)
+		  ,PASSWD = IFNULL(#{PASSWD}, PASSWD)
+		  ,PROJ_NM = IFNULL(#{PROJ_NM}, PROJ_NM)
+		  ,PROJ_NO = IFNULL(#{PROJ_NO}, PROJ_NO)
+		  ,MNG_LVL = IFNULL(#{MNG_LVL}, MNG_LVL)
+		  ,ENT_DT = IFNULL(#{ENT_DT}, ENT_DT)
+		  ,MOD_DTM = NOW()
+		WHERE 1 = 1
+		  AND PROJ_ID = #{PROJ_ID}
+	</update>
+
+	<delete id="deleteProj" parameterType="hashmap">
+		DELETE /* project.deleteProj */
+		TB_PROJ
+		 WHERE 1 = 1
+		   AND PROJ_ID = #{PROJ_ID}
+	</delete>
 </mapper>
 
 
