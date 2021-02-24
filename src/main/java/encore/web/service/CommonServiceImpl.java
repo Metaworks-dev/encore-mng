@@ -2,7 +2,6 @@ package encore.web.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import encore.web.dao.CodeData;
 import encore.web.dao.CommonDao;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
@@ -27,7 +26,6 @@ public class CommonServiceImpl implements encore.web.service.CommonService, Appl
     private ApplicationContext ctx;
     private ServletContext servletContext;
     private CommonDao commonDao;
-    private CodeData codeData;
 
     private SqlSessionFactory sqlSessionFactory;
 
@@ -136,11 +134,6 @@ public class CommonServiceImpl implements encore.web.service.CommonService, Appl
         return commonDao.getQueryData((String) params.get("query"), Integer.parseInt((String) params.get("limit")));
     }
 
-    @Override
-    public Map execGetAllCodeData(HashMap params) throws DataAccessException {
-        return codeData.getAllCodeData();
-    }
-
     // -------------------------------------------------------------------------
     // Setter methods for dependency injection
     // -------------------------------------------------------------------------
@@ -157,10 +150,6 @@ public class CommonServiceImpl implements encore.web.service.CommonService, Appl
         this.servletContext = arg0;
     }
 
-
-    public void setCodeData(CodeData codeData) {
-        this.codeData = codeData;
-    }
 
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
