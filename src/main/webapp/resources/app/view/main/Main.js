@@ -134,6 +134,15 @@ Ext.define('Encore.mng.view.main.Main', {
                 }
             ]
         }, {
+            title: '휴무일 관리',
+            layout: 'border',
+            items: [
+                {
+                    xtype: 'employ',
+                    region: 'center'
+                }
+            ]
+        }, {
             title: '투입공수',
             layout: 'border',
             items: [
