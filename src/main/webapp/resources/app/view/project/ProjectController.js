@@ -2,17 +2,17 @@ Ext.define('Encore.mng.view.project.ProjectController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.project-project',
     onNew: function() {
-        Ext.create('Encore.mng.view.employ.popup.AddEmploy').show();
+        Ext.create('Encore.mng.view.project.popup.AddProject').show();
     },
     onSearch: function() {
-        var s = this.lookupReference('employGrid').store;
-        var EMP_NM = this.lookupReference('EMP_NM').getValue();
-        s.proxy.extraParams.EMP_NM = EMP_NM;
+        var s = this.lookupReference('projectGrid').store;
+        var PROJ_NM = this.lookupReference('PROJ_NM').getValue();
+        s.proxy.extraParams.PROJ_NM = PROJ_NM;
         s.reload();
     },
     onItemdblclick: function (dv, record, item, index, e) {
         console.log(record);
-        Ext.create('Encore.mng.view.employ.popup.AddEmploy',
+        Ext.create('Encore.mng.view.project.popup.AddProject',
             {
                 row: record
             }).show();

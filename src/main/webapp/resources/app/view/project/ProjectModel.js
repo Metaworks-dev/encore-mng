@@ -17,9 +17,9 @@ Ext.define('Encore.mng.view.project.ProjectModel', {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
-                    ns: 'employ',
-                    id: 'getEmpList',
-                    cnt: 'getEmpListCnt'
+                    ns: 'project',
+                    id: 'getProjList',
+                    cnt: 'getProjListCnt'
                 },
                 reader: {
                     type: 'json',
@@ -42,9 +42,9 @@ Ext.define('Encore.mng.view.project.ProjectModel', {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
-                    ns: 'employ',
-                    id: 'getEmpList',
-                    cnt: 'getEmpListCnt'
+                    ns: 'project',
+                    id: 'getProjEmpList',
+                    cnt: 'getProjEmpListCnt'
                 },
                 reader: {
                     type: 'json',

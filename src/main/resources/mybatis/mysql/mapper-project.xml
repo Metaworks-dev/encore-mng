@@ -4,18 +4,16 @@
 
 	<select id="getProjList" parameterType="hashmap" resultType="hashmap">
 		SELECT /* project.getProjList */
-		PROJ_ID, PROJ_NO, EMAIL, PASSWD, PROJ_NM, MNG_LVL, ENT_DT, REG_DTM, MOD_DTM
-		FROM TB_PROJ
-		WHERE 1 = 1
+		       PROJ_ID, PROJ_NM, PROJ_STAT_CD, PROJ_START_DT, PROJ_END_DT, PROJ_EMP_CNT
+		     , date_format(REG_DTM,'%Y-%m-%d %H:%i:%s') REG_DTM
+		, date_format(MOD_DTM,'%Y-%m-%d %H:%i:%s') MOD_DTM
+		  FROM TB_PROJ
+		 WHERE 1 = 1
 		<if test="PROJ_ID != null">
 			AND PROJ_ID = #{PROJ_ID}
 		</if>
 		<if test="PROJ_NM != null">
 			AND PROJ_NM LIKE CONCAT('%', #{PROJ_NM}, '%')
-		</if>
-		<if test="EMAIL != null">
-			AND EMAIL = #{EMAIL}
-			AND PASSWD = #{PASSWD}
 		</if>
 		ORDER BY PROJ_ID DESC
 		<if test="start != null">
@@ -23,37 +21,22 @@
 		</if>
 	</select>
 
-	<select id="getProjListCnt" parameterType="hashmap" resultType="int">
-		SELECT /* project.getProjListCnt */
-		COUNT(*)
-		FROM TB_PROJ
-		WHERE 1 = 1
-		<if test="PROJ_ID != null">
-			AND PROJ_ID = #{PROJ_ID}
-		</if>
-		<if test="EMAIL != null">
-			AND EMAIL = #{EMAIL}
-			AND PASSWD = #{PASSWD}
-		</if>
-	</select>
 
 	<insert id="insertProj" parameterType="hashmap">
 		INSERT /* project.insertProj */
 		INTO TB_PROJ
-			(PROJ_NO, EMAIL, PASSWD, PROJ_NM, MNG_LVL, ENT_DT, REG_DTM, MOD_DTM)
+		(PROJ_NM, PROJ_STAT_CD, PROJ_START_DT, PROJ_END_DT, PROJ_EMP_CNT, REG_DTM, MOD_DTM)
 		VALUES
-		(#{PROJ_NO}, #{EMAIL}, #{PASSWD}, #{PROJ_NM}, #{MNG_LVL}, #{ENT_DT}, NOW(), NOW())
+		(#{PROJ_NM}, #{PROJ_STAT_CD}, #{PROJ_START_DT}, #{PROJ_END_DT}, 0, NOW(), NOW())
 	</insert>
 
 	<update id="updateProj" parameterType="hashmap">
 		UPDATE /* project.updateProj */
 			TB_PROJ
-		SET EMAIL = IFNULL(#{EMAIL}, EMAIL)
-		  ,PASSWD = IFNULL(#{PASSWD}, PASSWD)
-		  ,PROJ_NM = IFNULL(#{PROJ_NM}, PROJ_NM)
-		  ,PROJ_NO = IFNULL(#{PROJ_NO}, PROJ_NO)
-		  ,MNG_LVL = IFNULL(#{MNG_LVL}, MNG_LVL)
-		  ,ENT_DT = IFNULL(#{ENT_DT}, ENT_DT)
+		SET PROJ_NM = IFNULL(#{PROJ_NM}, PROJ_NM)
+		  ,PROJ_STAT_CD = IFNULL(#{PROJ_STAT_CD}, PROJ_STAT_CD)
+		  ,PROJ_START_DT = IFNULL(#{PROJ_START_DT}, PROJ_START_DT)
+		  ,PROJ_END_DT = IFNULL(#{PROJ_END_DT}, PROJ_END_DT)
 		  ,MOD_DTM = NOW()
 		WHERE 1 = 1
 		  AND PROJ_ID = #{PROJ_ID}
@@ -65,6 +48,31 @@
 		 WHERE 1 = 1
 		   AND PROJ_ID = #{PROJ_ID}
 	</delete>
+
+	<select id="getProjListCnt" parameterType="hashmap" resultType="int">
+		SELECT /* project.getProjListCnt */
+		       COUNT(*)
+		  FROM TB_PROJ
+		 WHERE 1 = 1
+		<if test="PROJ_ID != null">
+			AND PROJ_ID = #{PROJ_ID}
+		</if>
+		<if test="PROJ_NM != null">
+			AND PROJ_NM LIKE CONCAT('%', #{PROJ_NM}, '%')
+		</if>
+	</select>
+
+	<select id="getProjEmpList" parameterType="hashmap" resultType="hashmap">
+		SELECT /* project.getProjEmpList */
+		       PROJ_ID, EMP_ID, PROJ_ROLE, EMP_PROJ_START_DT, EMP_PROJ_END_DT, EMP_PROJ_APRX_END_DT, EMP_POSITION, EMP_PRICE
+		  FROM TB_PROJ_EMP
+		 WHERE 1 = 1
+		<if test="PROJ_ID != null">
+			AND PROJ_ID = #{PROJ_ID}
+		</if>
+		ORDER BY PROJ_ID DESC
+	</select>
+
 </mapper>
 
 

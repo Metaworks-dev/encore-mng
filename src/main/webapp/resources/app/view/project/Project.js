@@ -27,15 +27,15 @@ Ext.define('Encore.mng.view.project.Project',{
                     handler: 'onReload'
                 },
                 {
-                    fieldLabel: '이름',
-                    labelWidth: 45,
+                    fieldLabel: '프로젝트',
+                    labelWidth: 65,
                     xtype: 'textfield',
-                    reference: 'EMP_NM',
-                    itemId: 'EMP_NM',
-                    name: 'EMP_NM',
+                    reference: 'PROJ_NM',
+                    itemId: 'PROJ_NM',
+                    name: 'PROJ_NM',
                     // plugins: ['clearbutton'],
                     width: 250,
-                    emptyText: '이름',
+                    emptyText: '프로젝트',
                     listeners: {
                         specialKey: function (field, e) {
                             if (e.getKey() == e.ENTER) {
@@ -73,12 +73,12 @@ Ext.define('Encore.mng.view.project.Project',{
             // ],
             columns: [
                 {text: 'PROJ_ID', dataIndex: 'PROJ_ID', hidden: true, hideable: false},
-                {text: '프로젝트명', dataIndex: 'PROJ_NM', flex: 3, align: 'center'},
-                {text: '시작일자', dataIndex: 'EMAIL', flex: 1, align: 'left'},
-                {text: '종료일자', dataIndex: 'PASSWD', flex: 1, align: 'left'},
-                {text: '인원', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
-                // {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
-                // {text: '입사일자', dataIndex: 'ENT_DT', flex: 1, align: 'center'}
+                {text: '프로젝트명', dataIndex: 'PROJ_NM', flex: 3, align: 'left'},
+                {text: '상태', dataIndex: 'PROJ_STAT_CD', flex: 1, align: 'center'},
+                {text: '시작일자', dataIndex: 'PROJ_START_DT', flex: 1, align: 'center'},
+                {text: '종료일자', dataIndex: 'PROJ_END_DT', flex: 1, align: 'center'},
+                {text: '인원', dataIndex: 'PROJ_EMP_CNT', flex: 1, align: 'center'},
+                {text: '등록일자', dataIndex: 'REG_DTM', flex: 1, align: 'center'}
             ],
             listeners: {
                 itemdblclick: 'onItemdblclick'
