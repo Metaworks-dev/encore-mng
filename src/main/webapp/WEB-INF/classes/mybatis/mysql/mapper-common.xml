@@ -91,6 +91,37 @@
 		  FROM TB_COMMON_CD
 		 ORDER BY PAR_CD, ORD_SEQ, CD_VAL
 	</select>
+
+	<select id="getYearCalendar" parameterType="hashmap" resultType="hashmap">
+	SELECT /* common.getYearCalendar */ YYYY_MM, CONCAT(YYYY_MM, '-', LPAD(B.NO, 2, '0')) YYYY_MM_DD
+	,LPAD(B.NO, 2, '0') DD
+	,DAYOFWEEK(STR_TO_DATE(CONCAT(YYYY_MM, '-', LPAD(B.NO, 2, '0')), '%Y-%m-%d')) WEEK_DAY
+	,CASE WHEN DAYOFWEEK(STR_TO_DATE(CONCAT(YYYY_MM, '-', LPAD(B.NO, 2, '0')), '%Y-%m-%d')) IN (7, 1) THEN 0 ELSE 1 END WORK_DAY_YN
+	FROM (
+	SELECT CONCAT(DATE_FORMAT(NOW(), '%Y'), '-', LPAD(A.NO, 2, '0')) YYYY_MM
+	,DATE_FORMAT(LAST_DAY(STR_TO_DATE(CONCAT(DATE_FORMAT(NOW(), '%Y'), '-', LPAD(A.NO, 2, '0')), '%Y-%m-%d')), '%d') DT_CNT
+	FROM COPY_T A
+	WHERE A.NO &lt;= 12
+	) A
+	CROSS JOIN  COPY_T B ON A.DT_CNT >= B.NO
+	ORDER BY YYYY_MM_DD
+	</select>
+
+	<insert id="insertYearCalendar">
+		INSERT INTO TB_CALENDAR
+		SELECT YYYY_MM, CONCAT(YYYY_MM, '-', LPAD(B.NO, 2, '0')) YYYY_MM_DD
+		,LPAD(B.NO, 2, '0') DD
+		,DAYOFWEEK(STR_TO_DATE(CONCAT(YYYY_MM, '-', LPAD(B.NO, 2, '0')), '%Y-%m-%d')) WEEK_DAY
+		,CASE WHEN DAYOFWEEK(STR_TO_DATE(CONCAT(YYYY_MM, '-', LPAD(B.NO, 2, '0')), '%Y-%m-%d')) IN (7, 1) THEN 0 ELSE 1 END WORK_DAY_YN
+		FROM (
+		SELECT CONCAT(DATE_FORMAT(NOW(), '%Y'), '-', LPAD(A.NO, 2, '0')) YYYY_MM
+		,DATE_FORMAT(LAST_DAY(STR_TO_DATE(CONCAT(DATE_FORMAT(NOW(), '%Y'), '-', LPAD(A.NO, 2, '0')), '%Y-%m-%d')), '%d') DT_CNT
+		FROM COPY_T A
+		WHERE A.NO &lt;= 12
+		) A
+		CROSS JOIN  COPY_T B ON A.DT_CNT >= B.NO
+		ORDER BY YYYY_MM_DD
+	</insert>
 		
 </mapper>
 

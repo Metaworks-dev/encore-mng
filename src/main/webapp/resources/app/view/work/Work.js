@@ -61,30 +61,31 @@ Ext.define('Encore.mng.view.work.Work',{
             bind: {
                 store: '{empStore}'
             },
-            dockedItems: [
-                {
-                    xtype: 'pagingtoolbar',
-                    bind: {
-                        store: '{empStore}'
-                    },
-                    dock: 'bottom'
-                }
-            ],
+            // dockedItems: [
+            //     {
+            //         xtype: 'pagingtoolbar',
+            //         bind: {
+            //             store: '{empStore}'
+            //         },
+            //         dock: 'bottom'
+            //     }
+            // ],
             columns: [
                 // {xtype: 'rownumberer', width: 35},
                 {text: 'EMP_ID', dataIndex: 'EMP_ID', hidden: true, hideable: false},
-                {text: '프로젝트', dataIndex: 'EMP_NO', flex: 3, align: 'center'},
+                {text: '년월', dataIndex: 'YYYY_MM', flex: 3, align: 'center'},
+                {text: '프로젝트', dataIndex: 'PROJ_NM', flex: 3, align: 'center'},
                 {text: '투입율', dataIndex: 'EMAIL', flex: 3, align: 'left'},
                 // {text: 'Password', dataIndex: 'PASSWD', flex: 1, align: 'left'},
-                {text: '1', dataIndex: 'D1', flex: 0.5, align: 'center'},
-                {text: '2', dataIndex: 'D2', flex: 0.5, align: 'center'},
-                {text: '3', dataIndex: 'D3', flex: 0.5, align: 'center'},
-                {text: '4', dataIndex: 'D4', flex: 0.5, align: 'center'},
-                {text: '5', dataIndex: 'D5', flex: 0.5, align: 'center'},
-                {text: '6', dataIndex: 'D6', flex: 0.5, align: 'center'},
-                {text: '7', dataIndex: 'D7', flex: 0.5, align: 'center'},
-                {text: '8', dataIndex: 'D8', flex: 0.5, align: 'center'},
-                {text: '9', dataIndex: 'D9', flex: 0.5, align: 'center'},
+                {text: '1', dataIndex: 'D01', flex: 0.5, align: 'center'},
+                {text: '2', dataIndex: 'D02', flex: 0.5, align: 'center'},
+                {text: '3', dataIndex: 'D03', flex: 0.5, align: 'center'},
+                {text: '4', dataIndex: 'D04', flex: 0.5, align: 'center'},
+                {text: '5', dataIndex: 'D05', flex: 0.5, align: 'center'},
+                {text: '6', dataIndex: 'D06', flex: 0.5, align: 'center'},
+                {text: '7', dataIndex: 'D07', flex: 0.5, align: 'center'},
+                {text: '8', dataIndex: 'D08', flex: 0.5, align: 'center'},
+                {text: '9', dataIndex: 'D09', flex: 0.5, align: 'center'},
                 {text: '10', dataIndex: 'D10', flex: 0.5, align: 'center'},
                 {text: '11', dataIndex: 'D11', flex: 0.5, align: 'center'},
                 {text: '12', dataIndex: 'D12', flex: 0.5, align: 'center'},
