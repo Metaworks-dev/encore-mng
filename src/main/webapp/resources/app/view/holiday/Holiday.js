@@ -1,16 +1,16 @@
-Ext.define('Encore.mng.view.work.Work', {
+Ext.define('Encore.mng.view.holiday.Holiday',{
     extend: 'Ext.panel.Panel',
-    alias: 'widget.work',
+    alias: 'widget.holiday',
     requires: [
-        'Encore.mng.view.work.WorkController',
-        'Encore.mng.view.work.WorkModel'
+        'Encore.mng.view.holiday.HolidayController',
+        'Encore.mng.view.holiday.HolidayModel'
     ],
 
-    controller: 'work-work',
+    controller: 'holiday-holiday',
     viewModel: {
-        type: 'work-work'
+        type: 'holiday-holiday'
     },
-    title: '투입공수 관리',
+    title: '휴무일 관리',
     layout: 'border',
     items: [
         {
@@ -23,45 +23,45 @@ Ext.define('Encore.mng.view.work.Work', {
                 stripeRows: false,
                 columnLines: true,
             },
-            // tbar: [
-            //     {
-            //         xtype: 'button',
-            //         text: '새로고침',
-            //         handler: 'onReload'
-            //     },
-            //     {
-            //         fieldLabel: '이름',
-            //         labelWidth: 45,
-            //         xtype: 'textfield',
-            //         reference: 'EMP_NM',
-            //         itemId: 'EMP_NM',
-            //         name: 'EMP_NM',
-            //         // plugins: ['clearbutton'],
-            //         width: 250,
-            //         emptyText: '이름',
-            //         listeners: {
-            //             specialKey: function (field, e) {
-            //                 if (e.getKey() == e.ENTER) {
-            //                     console.log('enter');
-            //                     // me.membGrid.down('#searchBtn').fireEvent('click');
-            //                 }
-            //             }
-            //         }
-            //     },
-            //     {
-            //         xtype: 'button',
-            //         itemId: 'btnSearch',
-            //         text: '검색',
-            //         disabled: false,
-            //         handler: 'onSearch'
-            //     },
-            //     '->',
-            //     {
-            //         xtype: 'button',
-            //         text: '추가',
-            //         handler: 'onNew'
-            //     },
-            // ],
+            tbar: [
+                {
+                    xtype: 'button',
+                    text: '새로고침',
+                    handler: 'onReload'
+                },
+                {
+                    fieldLabel: '이름',
+                    labelWidth: 45,
+                    xtype: 'textfield',
+                    reference: 'EMP_NM',
+                    itemId: 'EMP_NM',
+                    name: 'EMP_NM',
+                    // plugins: ['clearbutton'],
+                    width: 250,
+                    emptyText: '이름',
+                    listeners: {
+                        specialKey: function (field, e) {
+                            if (e.getKey() == e.ENTER) {
+                                console.log('enter');
+                                // me.membGrid.down('#searchBtn').fireEvent('click');
+                            }
+                        }
+                    }
+                },
+                {
+                    xtype: 'button',
+                    itemId: 'btnSearch',
+                    text: '검색',
+                    disabled: false,
+                    handler: 'onSearch'
+                },
+                '->',
+                {
+                    xtype: 'button',
+                    text: '추가',
+                    handler: 'onNew'
+                },
+            ],
             bind: {
                 store: '{empStore}'
             },
@@ -79,10 +79,6 @@ Ext.define('Encore.mng.view.work.Work', {
                 defaults: { menuDisabled: true },
                 items: [
                     {text: '월', dataIndex: 'MM', width: 40, align: 'center', locked: true},
-                    {text: '프로젝트', dataIndex: 'PROJ_NM', width: 140, align: 'center', locked: true},
-                    {text: '근무일', dataIndex: 'WORK_DD', width: 60, align: 'center', locked: true},
-                    {text: '투입일', dataIndex: 'EMAIL', width: 60, align: 'center', locked: true},
-                    {text: '투입율', dataIndex: 'EMAIL', width: 60, align: 'center', locked: true},
                     {text: '1', dataIndex: 'D01', flex: 1, align: 'center',
                         renderer: function (value, meta, record) {
                             var val = record.data.H01;
@@ -458,30 +454,18 @@ Ext.define('Encore.mng.view.work.Work', {
                     {text: 'H31', dataIndex: 'H31', flex: 1, align: 'center', hidden: true}
                 ]
             },
+
             listeners: {
-                celldblclick: function(obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-                    console.log('dblclick');
-                        console.log(obj);
-                        console.log(td);
-                        console.log(record);
-                        console.log(cellIndex);
-                        console.log(rowIndex);
-                        console.log(e);
-                        console.log(eOpts);
-                    // var employGrid = this.lookupReference('employGrid');
-                    // var PROJ_ID = this.lookupReference('PROJ_ID').getValue();
-                    Ext.create('Encore.mng.view.work.popup.AddProjWork', {
-                    }).show();
-                },
-                // cellclick: function(obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-                //     console.log(obj);
-                //     console.log(td);
-                //     console.log(record);
-                //     console.log(cellIndex);
-                //     console.log(rowIndex);
-                //     console.log(e);
-                //     console.log(eOpts);
-                // }
+                // itemdblclick: 'onItemdblclick',
+                cellclick: function(obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+                    console.log(obj);
+                    console.log(td);
+                    console.log(record);
+                    console.log(cellIndex);
+                    console.log(rowIndex);
+                    console.log(e);
+                    console.log(eOpts);
+                }
             }
         }
     ]

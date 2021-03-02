@@ -1,6 +1,6 @@
-Ext.define('Encore.mng.view.project.popup.AddEmployModel', {
+Ext.define('Encore.mng.view.work.popup.AddProjWorkModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.project-popup-addemploy',
+    alias: 'viewmodel.work-popup-addprojwork',
     data: {
         name: 'Encore.mng'
     },

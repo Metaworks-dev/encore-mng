@@ -116,15 +116,6 @@ Ext.define('Encore.mng.view.main.Main', {
                     region: 'center'
                 }]
         }, {
-            title: '프로젝트 관리',
-            layout: 'border',
-            items: [
-                {
-                    xtype: 'project',
-                    region: 'center'
-                }
-            ]
-        }, {
             title: '직원 관리',
             layout: 'border',
             items: [
@@ -134,11 +125,20 @@ Ext.define('Encore.mng.view.main.Main', {
                 }
             ]
         }, {
+            title: '프로젝트 관리',
+            layout: 'border',
+            items: [
+                {
+                    xtype: 'project',
+                    region: 'center'
+                }
+            ]
+        }, {
             title: '휴무일 관리',
             layout: 'border',
             items: [
                 {
-                    xtype: 'employ',
+                    xtype: 'holiday',
                     region: 'center'
                 }
             ]

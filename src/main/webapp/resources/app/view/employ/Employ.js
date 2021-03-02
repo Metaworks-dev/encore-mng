@@ -9,12 +9,12 @@ Ext.define('Encore.mng.view.employ.Employ', {
     viewModel: {
         type: 'employ-employ'
     },
-    title: '직원 관리',
     layout: 'border',
     items: [
         {
             xtype: 'grid',
             region: 'center',
+            title: '직원 관리',
             itemId: 'employGrid',
             reference: 'employGrid',
             loadingText: 'loading',
@@ -82,6 +82,29 @@ Ext.define('Encore.mng.view.employ.Employ', {
             listeners: {
                 itemdblclick: 'onItemdblclick'
             }
-        }
+        },
+        // {
+        //     xtype: 'tabpanel',
+        //     region: 'center',
+        //     // tabPosition: 'left',
+        //     items: [
+        //
+        //         {
+        //             xtype: 'panel',
+        //             title: '개인매출액',
+        //             html: '개인매출액'
+        //         },
+        //         {
+        //             xtype: 'panel',
+        //             title: '원가투입율',
+        //             html: '원가투입율'
+        //         },
+        //         {
+        //             xtype: 'panel',
+        //             title: '개별투입율',
+        //             html: '개별투입율'
+        //         }
+        //     ]
+        // }
     ]
 });

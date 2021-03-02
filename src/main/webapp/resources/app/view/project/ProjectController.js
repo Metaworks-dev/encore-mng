@@ -1,8 +1,16 @@
 Ext.define('Encore.mng.view.project.ProjectController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.project-project',
-    onNew: function() {
+    onNewProj: function() {
         Ext.create('Encore.mng.view.project.popup.AddProject').show();
+    },
+    onNewEmp: function() {
+        var employGrid = this.lookupReference('employGrid');
+        var PROJ_ID = this.lookupReference('PROJ_ID').getValue();
+        Ext.create('Encore.mng.view.project.popup.AddEmploy', {
+            employGrid: employGrid,
+            PROJ_ID: PROJ_ID
+        }).show();
     },
     onSearch: function() {
         var s = this.lookupReference('projectGrid').store;
@@ -16,6 +24,14 @@ Ext.define('Encore.mng.view.project.ProjectController', {
             {
                 row: record
             }).show();
+    },
+    onItemclick: function (dv, record, item, index, e) {
+        var PROJ_ID = record.get('PROJ_ID');
+        var s = this.lookupReference('employGrid').store;
+        s.proxy.extraParams.PROJ_ID = PROJ_ID;
+        s.reload();
+
+        this.lookupReference('PROJ_ID').setValue(PROJ_ID);
     },
     onReload: function () {
         this.lookupReference('employGrid').store.reload();

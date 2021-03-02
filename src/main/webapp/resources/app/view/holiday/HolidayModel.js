@@ -1,19 +1,18 @@
-Ext.define('Encore.mng.view.project.popup.AddEmployModel', {
+Ext.define('Encore.mng.view.holiday.HolidayModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.project-popup-addemploy',
+    alias: 'viewmodel.holiday-holiday',
     data: {
         name: 'Encore.mng'
     },
     stores: {
         empStore: {
-            autoLoad: false,
+            autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
-                    ns: 'project',
-                    id: 'getProjAddEmpList',
-                    // cnt: 'getEmpListCnt'
+                    ns: 'common',
+                    id: 'getHolidayCalendarList'
                 },
                 reader: {
                     type: 'json',
@@ -24,4 +23,5 @@ Ext.define('Encore.mng.view.project.popup.AddEmployModel', {
             }
         },
     }
+
 });

@@ -25,7 +25,7 @@
     <div class="flex-container">
         <div class="auth-body">
 <%--            <%= request.get%>--%>
-            <div class="auth-title">EN-CORE Management</div>
+            <div class="auth-title">EN-CORE</div>
             <c:if test="${!errorMsg}">
                 <div class="auth-error">${errorMsg}</div>
             </c:if>
