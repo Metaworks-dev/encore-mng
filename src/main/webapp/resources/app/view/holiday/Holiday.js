@@ -32,10 +32,22 @@ Ext.define('Encore.mng.view.holiday.Holiday',{
                 {
                     fieldLabel: '년도',
                     labelWidth: 45,
-                    xtype: 'hidden',
+                    width: 100,
+                    xtype: 'textfield',
                     reference: 'YYYY',
                     itemId: 'YYYY',
                     name: 'YYYY',
+                },
+                '->',
+                {
+                    xtype: 'button',
+                    text: '<<',
+                    handler: 'onNew'
+                },
+                {
+                    xtype: 'button',
+                    text: '>>',
+                    handler: 'onNew'
                 },
             ],
             bind: {

@@ -80,11 +80,11 @@ public class JsonDataController {
         String userid = StringUtils.defaultString((String) session.getAttribute("USERID"), "");
         String USER_UID = StringUtils.defaultString((String) session.getAttribute("USER_UID"), "");
 
-		int EMP_ID = (int) session.getAttribute("EMP_ID");
+		int SESS_EMP_ID = (int) session.getAttribute("SESS_EMP_ID");
 
         params.put("USERID", userid);
         params.put("USER_UID", USER_UID);
-        params.put("EMP_ID", EMP_ID);
+        params.put("SESS_EMP_ID", SESS_EMP_ID);
 
         if (logger.isDebugEnabled()) {
         	logger.debug(gson.toJson(params));

@@ -32,7 +32,8 @@ Ext.define('Encore.mng.view.work.Work', {
                 {
                     fieldLabel: '년도',
                     labelWidth: 45,
-                    xtype: 'hidden',
+                    width: 100,
+                    xtype: 'textfield',
                     reference: 'YYYY',
                     itemId: 'YYYY',
                     name: 'YYYY',
@@ -63,12 +64,17 @@ Ext.define('Encore.mng.view.work.Work', {
             //         disabled: false,
             //         handler: 'onSearch'
             //     },
-            //     '->',
-            //     {
-            //         xtype: 'button',
-            //         text: '추가',
-            //         handler: 'onNew'
-            //     },
+                '->',
+                {
+                    xtype: 'button',
+                    text: '<<',
+                    handler: 'onNew'
+                },
+                {
+                    xtype: 'button',
+                    text: '>>',
+                    handler: 'onNew'
+                },
             ],
             bind: {
                 store: '{projWorkStore}'
@@ -87,7 +93,7 @@ Ext.define('Encore.mng.view.work.Work', {
                 defaults: { menuDisabled: true },
                 items: [
                     {text: '월', dataIndex: 'MM', width: 40, align: 'center', locked: true},
-                    {text: '프로젝트', dataIndex: 'PROJ_NM', width: 140, align: 'center', locked: true},
+                    {text: '프로젝트', dataIndex: 'PROJ_NM', width: 140, align: 'left', locked: true},
                     {text: '근무일', dataIndex: 'WORK_DD', width: 60, align: 'center', locked: true},
                     {text: '투입일', dataIndex: 'EMAIL', width: 60, align: 'center', locked: true},
                     {text: '투입율', dataIndex: 'EMAIL', width: 60, align: 'center', locked: true},
