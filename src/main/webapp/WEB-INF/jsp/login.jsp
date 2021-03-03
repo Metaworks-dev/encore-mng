@@ -33,7 +33,7 @@
                 <input type="text" name="EMAIL" id="EMAIL" tabindex="1" class="form-control" placeholder="Email" value="hkwee@en-core.com" required autofocus>
             </div>
             <div class="form-group auth-form">
-                <input type="password" name="PASSWD" id="PASSWD" tabindex="2" class="form-control" placeholder="Password" value="7114" required>
+                <input type="password" name="PASSWD" id="PASSWD" tabindex="2" class="form-control" placeholder="Password" value="010-4787-7114" required>
             </div>
             <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control auth-form btn btn-info" value="Login">
         </div>

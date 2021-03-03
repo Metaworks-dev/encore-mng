@@ -27,4 +27,5 @@ public interface CommonService {
     List execGetQueryToolResult(HashMap params) throws DataAccessException;
 
 
+
 }

@@ -5,14 +5,14 @@ Ext.define('Encore.mng.view.work.WorkModel', {
         name: 'Encore.mng'
     },
     stores: {
-        empStore: {
+        projWorkStore: {
             autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
-                    ns: 'employ',
-                    id: 'getEmpCalendarList'
+                    ns: 'projwork',
+                    id: 'getProjWorkCalList'
                 },
                 reader: {
                     type: 'json',

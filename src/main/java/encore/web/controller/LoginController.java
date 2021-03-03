@@ -73,7 +73,9 @@ public class LoginController {
 		} else {
 			CookieUtil.setCookie(response, "EMAIL", (String) userInfo.get("EMAIL"));
 			session.setAttribute("EMAIL", userInfo.get("EMAIL"));
-			
+
+//			CookieUtil.setCookie(response, "EMP_ID", (String) userInfo.get("EMP_ID"));
+			session.setAttribute("EMP_ID", userInfo.get("EMP_ID"));
 			return new ModelAndView("redirect:/index");			
 		}
 	}

@@ -1,6 +1,6 @@
-Ext.define('Encore.mng.view.work.popup.AddProjWorkController', {
+Ext.define('Encore.mng.view.holiday.popup.AddHolidayController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.work-popup-addprojwork',
+    alias: 'controller.holiday-popup-addholiday',
     onAfterrender: function() {
         var me = this;
         var YYYY_MM_DD = me.getView().YYYY
@@ -8,6 +8,7 @@ Ext.define('Encore.mng.view.work.popup.AddProjWorkController', {
             + '-' + Util.String.lpad(me.getView().DD, 2, '0');
         me.lookupReference('START_DT').setValue(YYYY_MM_DD);
         me.lookupReference('END_DT').setValue(YYYY_MM_DD);
+        me.lookupReference('HOLIDAY_NM').focus();
 
         Ext.Ajax.request({
             async: true,
@@ -40,7 +41,41 @@ Ext.define('Encore.mng.view.work.popup.AddProjWorkController', {
         var me = this;
         me.getView().close();
     },
-    onSaveClick: function() {
+    onDeleteClick: function() {
+        console.log('onDeleteClick');
+        var me = this;
+        var f = me.lookupReference('frm').getForm();
+
+        if (f.isValid()) {
+            f.submit({
+                method: 'POST',
+                url: 'json',
+                waitTitle: '삭제 중..',
+                waitMsg: '삭제 중입니다.',
+                submitEmptyText: false,
+                params: {
+                    ns: 'common',
+                    id: 'deleteCalendar'
+                },
+                success: function (form, action) {
+                    var obj = Ext.decode(action.response.responseText);
+                    if (obj.success === 'true') {
+                        Ext.Msg.alert('알림', '삭제 완료', function () {
+                            me.getView().calendarGrid.store.reload();
+                            me.getView().close();
+                        });
+                    } else {
+                        Ext.Msg.alert('알림', obj.msg, function () {
+                        });
+                    }
+                },
+                failure: function (response) {
+                    Ext.Msg.alert('알림', '등록 중 오류가 발생하였습니다.<br>' + response.error);
+                }
+            });
+        }
+    },
+    onSaveClick: function () {
         var me = this;
         var f = me.lookupReference('frm').getForm();
 
@@ -52,26 +87,25 @@ Ext.define('Encore.mng.view.work.popup.AddProjWorkController', {
                 waitMsg: '데이터를 전송 중입니다.',
                 submitEmptyText: false,
                 params: {
-                    ns: 'projwork',
-                    id: 'txUpsertProjWork'
-                    // id: 'insertProjWork'
+                    ns: 'common',
+                    id: 'updateCalendar'
                 },
                 success: function (form, action) {
                     var obj = Ext.decode(action.response.responseText);
                     if (obj.success === 'true') {
-                        Ext.Msg.alert('알림', '등록 완료', function() {
-                            me.getView().projWorkGrid.store.reload();
+                        Ext.Msg.alert('알림', '등록 완료', function () {
+                            me.getView().calendarGrid.store.reload();
                             me.getView().close();
                         });
                     } else {
-                        Ext.Msg.alert('알림', obj.msg, function() {
+                        Ext.Msg.alert('알림', obj.msg, function () {
                         });
                     }
                 },
                 failure: function (response) {
-                    Ext.Msg.alert('알림', '회원 정보 등록 중 오류가 발생하였습니다.<br>' + response.error);
+                    Ext.Msg.alert('알림', '등록 중 오류가 발생하였습니다.<br>' + response.error);
                 }
             });
         }
-    }
+    },
 });

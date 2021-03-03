@@ -55,4 +55,8 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
+	<bean id="projWorkService" class="encore.web.service.ProjWorkServiceImpl">
+		<property name="commonDao" ref="commonDao" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 </beans>

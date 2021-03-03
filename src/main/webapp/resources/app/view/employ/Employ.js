@@ -87,6 +87,21 @@ Ext.define('Encore.mng.view.employ.Employ', {
                         itemdblclick: 'onItemdblclick'
                     }
                 },
+                {
+                    xtype: 'panel',
+                    title: '개인매출액',
+                    html: '개인매출액'
+                },
+                {
+                    xtype: 'panel',
+                    title: '원가투입율',
+                    html: '원가투입율'
+                },
+                {
+                    xtype: 'panel',
+                    title: '개별투입율',
+                    html: '개별투입율'
+                }
             ]
         }
 
@@ -96,21 +111,7 @@ Ext.define('Encore.mng.view.employ.Employ', {
         //     // tabPosition: 'left',
         //     items: [
         //
-        //         {
-        //             xtype: 'panel',
-        //             title: '개인매출액',
-        //             html: '개인매출액'
-        //         },
-        //         {
-        //             xtype: 'panel',
-        //             title: '원가투입율',
-        //             html: '원가투입율'
-        //         },
-        //         {
-        //             xtype: 'panel',
-        //             title: '개별투입율',
-        //             html: '개별투입율'
-        //         }
+
         //     ]
         // }
     ]

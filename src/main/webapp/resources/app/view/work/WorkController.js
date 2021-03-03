@@ -1,17 +1,55 @@
 Ext.define('Encore.mng.view.work.WorkController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.work-work',
-    onColumnRender: function(value, meta, record)  {
-        // console.log(value);
-        console.log(meta);
-        console.log('cellIndex:' + meta.cellIndex);
+    onReload: function () {
+        this.lookupReference('projWorkGrid').store.reload();
+    },
+    getYear: function () {
+        var me = this;
+        var YYYY = this.lookupReference('YYYY').getValue();
+
+        Ext.Ajax.request({
+            async: true,
+            url: 'json',
+            method: 'POST',
+            params: {
+                ns: 'common',
+                id: 'getCalendarYear',
+                YYYY: YYYY,
+            },
+            success: function (response) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success == 'true') {
+                    Ext.defer(function () {
+                        me.lookupReference('YYYY').setValue(res.rows[0].YYYY);
+                    }, 100, this);
+                } else {
+                    console.log(res.msg);
+                }
+            },
+            failure: function (response) {
+                console.log(response);
+            }
+        });
+    },
+    onAfterrender: function () {
+        this.getYear();
+    },
+    onCelldblclick: function (obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+        var YYYY = this.lookupReference('YYYY').getValue();
+        var projWorkGrid = this.lookupReference('projWorkGrid');
+
+        console.log(obj);
+        console.log(td);
         console.log(record);
-        var val = eval('record.data.H' + '');
-        // if (!Ext.isEmpty(record.data.H02) && val === '7') {
-        //     meta.style="background-color:#ADD8E6";
-        // } else if (!Ext.isEmpty(record.data.H02) && val === '1') {
-        //     meta.style="background-color:#FFB6C1";
-        // }
-        return value;
-    }
+        console.log(cellIndex);
+        console.log(rowIndex);
+
+        Ext.create('Encore.mng.view.work.popup.AddProjWork', {
+            YYYY: YYYY,
+            DD: cellIndex + 1,
+            MM: rowIndex + 1,
+            projWorkGrid: projWorkGrid
+        }).show();
+    },
 });

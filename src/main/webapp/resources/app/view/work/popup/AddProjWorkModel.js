@@ -5,15 +5,14 @@ Ext.define('Encore.mng.view.work.popup.AddProjWorkModel', {
         name: 'Encore.mng'
     },
     stores: {
-        empStore: {
-            autoLoad: false,
+        projStore: {
+            autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
                     ns: 'project',
-                    id: 'getProjAddEmpList',
-                    // cnt: 'getEmpListCnt'
+                    id: 'getProjList'
                 },
                 reader: {
                     type: 'json',

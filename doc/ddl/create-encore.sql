@@ -54,3 +54,25 @@ CREATE TABLE `TB_PROJ_EMP` (
                                `EMP_PRICE` int(11) DEFAULT NULL COMMENT '투입단가',
                                PRIMARY KEY (`PROJ_ID`,`EMP_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+
+
+;
+
+
+truncate table TB_CALENDAR ;
+
+insert into TB_CALENDAR
+select yyyy_mm, concat(yyyy_mm, '-', LPAD(b.no, 2, '0')) yyyy_mm_dd
+     ,LPAD(b.no, 2, '0') dd
+     ,dayofweek(str_to_date(concat(yyyy_mm, '-', LPAD(b.no, 2, '0')), '%Y-%m-%d')) week_day
+     ,case when dayofweek(str_to_date(concat(yyyy_mm, '-', LPAD(b.no, 2, '0')), '%Y-%m-%d')) in (7, 1) then 1 else 0 end holiday_yn
+     ,null holiday_nm
+from (
+         SELECT concat(date_format(now(), '%Y'), '-', LPAD(A.NO, 2, '0')) yyyy_mm
+              ,date_Format(last_day(str_to_date(concat(date_format(now(), '%Y'), '-', LPAD(A.NO, 2, '0')), '%Y-%m-%d')), '%d') dt_cnt
+         FROM COPY_T A
+         WHERE A.NO <= 12
+     ) a
+         cross join COPY_T b on a.dt_cnt >= b.no
+order by 1, 2
+

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import encore.web.service.CommonService;
 
+import encore.web.service.ProjWorkService;
 import encore.web.util.CollectionUtil;
 import encore.web.util.DebugUtil;
 import encore.web.util.ServletUtil;
@@ -35,6 +36,9 @@ public class JsonDataController {
 	
 	@Autowired
 	private CommonService commonService;
+
+	@Autowired
+	private ProjWorkService projWorkService;
 
 	@Autowired
 	ServletContext servletContext;
@@ -76,8 +80,11 @@ public class JsonDataController {
         String userid = StringUtils.defaultString((String) session.getAttribute("USERID"), "");
         String USER_UID = StringUtils.defaultString((String) session.getAttribute("USER_UID"), "");
 
+		int EMP_ID = (int) session.getAttribute("EMP_ID");
+
         params.put("USERID", userid);
         params.put("USER_UID", USER_UID);
+        params.put("EMP_ID", EMP_ID);
 
         if (logger.isDebugEnabled()) {
         	logger.debug(gson.toJson(params));
@@ -203,6 +210,9 @@ public class JsonDataController {
 		if (svc.equals("common")) {
 			method = CommonService.class.getMethod(sql, paramTypes);
 			obj = method.invoke(commonService, new Object[] { params });
+		} else if (svc.equals("projwork")) {
+			method = ProjWorkService.class.getMethod(sql, paramTypes);
+			obj = method.invoke(projWorkService, new Object[] { params });
 		}
 		
 		String success = StringUtils.defaultString((String) params.get("success"));
