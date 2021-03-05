@@ -41,7 +41,7 @@
 		INSERT /* projwork.insertProjWork */
 		  INTO TB_PROJ_WORK
             (PROJ_ID, EMP_ID, WORK_DT, WORK_STAT_CD, REG_DTM, MOD_DTM)
-        SELECT #{PROJ_ID}, #{EMP_ID}, A.YYYY_MM_DD, #{WORK_STAT_CD}, NOW(), NOW()
+        SELECT #{PROJ_ID}, IFNULL(#{EMP_ID}, #{SESS_EMP_ID}), A.YYYY_MM_DD, #{WORK_STAT_CD}, NOW(), NOW()
           FROM TB_CALENDAR A
          WHERE 1 = 1
            AND A.HOLIDAY_YN = '0'
@@ -79,9 +79,9 @@
 	<select id="getProjWorkCalList" parameterType="hashmap" resultType="hashmap">
 		SELECT /* projwork.getProjWorkCalList */
 			A.YYYY_MM
-			 ,SUBSTR(A.YYYY_MM, 6, 2) MM
-			 ,B.PROJ_ID
-			 ,C.PROJ_NM
+			 ,MAX(SUBSTR(A.YYYY_MM, 6, 2)) MM
+			 ,MAX(B.PROJ_ID) PROJ_ID
+			 ,MAX(C.PROJ_NM) PROJ_NM
 			 ,COUNT(*) DD
 			 ,COUNT(*) - COUNT(CASE WHEN HOLIDAY_YN = 1 THEN 1 END) WORK_DD
 			 ,COUNT(CASE WHEN B.WORK_DT IS NOT NULL THEN 1 END) PROJ_WORK_DD
@@ -153,7 +153,8 @@
 				 LEFT OUTER JOIN TB_PROJ C ON B.PROJ_ID = C.PROJ_ID
 		WHERE 1 = 1
 		  AND YYYY_MM LIKE CONCAT(DATE_FORMAT(NOW(), '%Y'), '%')
-		GROUP BY YYYY_MM, SUBSTR(A.YYYY_MM, 6, 2), B.PROJ_ID ,C.PROJ_NM
+		GROUP BY YYYY_MM
+		       /* , SUBSTR(A.YYYY_MM, 6, 2), B.PROJ_ID ,C.PROJ_NM */
 	</select>
 
 
