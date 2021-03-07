@@ -71,9 +71,11 @@ public class LoginController {
 			return mv;
 //			return new ModelAndView("/login", returnMap);
 		} else {
-			CookieUtil.setCookie(response, "EMAIL", (String) userInfo.get("EMAIL"));
+//			CookieUtil.setCookie(response, "EMAIL", (String) userInfo.get("EMAIL"));
 			session.setAttribute("EMAIL", userInfo.get("EMAIL"));
-			
+
+//			CookieUtil.setCookie(response, "EMP_ID", (String) userInfo.get("EMP_ID"));
+			session.setAttribute("SESS_EMP_ID", userInfo.get("EMP_ID"));
 			return new ModelAndView("redirect:/index");			
 		}
 	}
@@ -84,7 +86,7 @@ public class LoginController {
 		HttpSession session = request.getSession(false);
 		
 		if (!request.getSession().isNew()) {
-			CookieUtil.unsetCookie(response, "EMAIL");
+//			CookieUtil.unsetCookie(response, "EMAIL");
 			session.invalidate();
 		}
 		

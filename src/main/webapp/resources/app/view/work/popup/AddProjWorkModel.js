@@ -1,18 +1,18 @@
-Ext.define('Encore.mng.view.work.WorkModel', {
+Ext.define('Encore.mng.view.work.popup.AddProjWorkModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.work-work',
+    alias: 'viewmodel.work-popup-addprojwork',
     data: {
         name: 'Encore.mng'
     },
     stores: {
-        projWorkStore: {
+        projStore: {
             autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
-                    ns: 'projwork',
-                    id: 'getProjWorkCalList'
+                    ns: 'project',
+                    id: 'getProjList'
                 },
                 reader: {
                     type: 'json',
@@ -23,5 +23,4 @@ Ext.define('Encore.mng.view.work.WorkModel', {
             }
         },
     }
-
 });

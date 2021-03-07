@@ -62,16 +62,43 @@
 		</if>
 	</select>
 
+
+	<select id="getProjAddEmpList" parameterType="hashmap" resultType="hashmap">
+		SELECT /* project.getProjAddEmpList */
+		A.EMP_ID, A.EMP_NO, A.EMAIL, A.PASSWD, A.EMP_NM, A.MNG_LVL, A.ENT_DT, A.REG_DTM, A.MOD_DTM
+		FROM TB_EMP A
+		WHERE 1 = 1
+		  AND NOT EXISTS (
+		      SELECT 'X' FROM TB_PROJ_EMP WHERE PROJ_ID = #{PROJ_ID} AND A.EMP_ID = EMP_ID
+		)
+		<if test="EMP_NM != null">
+			AND A.EMP_NM LIKE CONCAT('%', #{EMP_NM}, '%')
+		</if>
+		ORDER BY A.EMP_NM DESC
+	</select>
+
+
 	<select id="getProjEmpList" parameterType="hashmap" resultType="hashmap">
 		SELECT /* project.getProjEmpList */
-		       PROJ_ID, EMP_ID, PROJ_ROLE, EMP_PROJ_START_DT, EMP_PROJ_END_DT, EMP_PROJ_APRX_END_DT, EMP_POSITION, EMP_PRICE
-		  FROM TB_PROJ_EMP
+		       A.PROJ_ID, A.EMP_ID, B.EMP_NO, B.EMP_NM, B.MNG_LVL, A.PROJ_ROLE, A.EMP_PROJ_START_DT, A.EMP_PROJ_END_DT
+		      ,A.EMP_PROJ_LVL, A.EMP_PRICE
+		  FROM TB_PROJ_EMP A
+		 INNER JOIN TB_EMP B ON A.EMP_ID = B.EMP_ID
 		 WHERE 1 = 1
 		<if test="PROJ_ID != null">
 			AND PROJ_ID = #{PROJ_ID}
 		</if>
-		ORDER BY PROJ_ID DESC
+		ORDER BY EMP_NM DESC
 	</select>
+
+	<insert id="insertProjEmp" parameterType="hashmap">
+		INSERT /* project.insertProjEmp */
+		  INTO TB_PROJ_EMP
+			(PROJ_ID, EMP_ID, PROJ_ROLE, EMP_PROJ_START_DT, EMP_PROJ_END_DT, EMP_PROJ_LVL, EMP_PRICE)
+		VALUES
+			(#{PROJ_ID}, #{EMP_ID}, #{PROJ_ROLE}, #{EMP_PROJ_START_DT}, #{EMP_PROJ_END_DT}, #{EMP_PROJ_LVL}, #{EMP_PRICE})
+	</insert>
+
 
 </mapper>
 

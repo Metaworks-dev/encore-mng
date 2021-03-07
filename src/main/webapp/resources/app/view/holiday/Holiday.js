@@ -1,23 +1,23 @@
-Ext.define('Encore.mng.view.work.Work', {
+Ext.define('Encore.mng.view.holiday.Holiday',{
     extend: 'Ext.panel.Panel',
-    alias: 'widget.work',
+    alias: 'widget.holiday',
     requires: [
-        'Encore.mng.view.work.WorkController',
-        'Encore.mng.view.work.WorkModel'
+        'Encore.mng.view.holiday.HolidayController',
+        'Encore.mng.view.holiday.HolidayModel'
     ],
 
-    controller: 'work-work',
+    controller: 'holiday-holiday',
     viewModel: {
-        type: 'work-work'
+        type: 'holiday-holiday'
     },
-    title: '투입공수 관리',
+    title: '휴무일 관리',
     layout: 'border',
     items: [
         {
             xtype: 'grid',
             region: 'center',
-            itemId: 'projWorkGrid',
-            reference: 'projWorkGrid',
+            itemId: 'calendarGrid',
+            reference: 'calendarGrid',
             loadingText: 'loading',
             viewConfig: {
                 stripeRows: false,
@@ -38,32 +38,6 @@ Ext.define('Encore.mng.view.work.Work', {
                     itemId: 'YYYY',
                     name: 'YYYY',
                 },
-            //     {
-            //         fieldLabel: '이름',
-            //         labelWidth: 45,
-            //         xtype: 'textfield',
-            //         reference: 'EMP_NM',
-            //         itemId: 'EMP_NM',
-            //         name: 'EMP_NM',
-            //         // plugins: ['clearbutton'],
-            //         width: 250,
-            //         emptyText: '이름',
-            //         listeners: {
-            //             specialKey: function (field, e) {
-            //                 if (e.getKey() == e.ENTER) {
-            //                     console.log('enter');
-            //                     // me.membGrid.down('#searchBtn').fireEvent('click');
-            //                 }
-            //             }
-            //         }
-            //     },
-            //     {
-            //         xtype: 'button',
-            //         itemId: 'btnSearch',
-            //         text: '검색',
-            //         disabled: false,
-            //         handler: 'onSearch'
-            //     },
                 '->',
                 {
                     xtype: 'button',
@@ -77,7 +51,7 @@ Ext.define('Encore.mng.view.work.Work', {
                 },
             ],
             bind: {
-                store: '{projWorkStore}'
+                store: '{empStore}'
             },
             // dockedItems: [
             //     {
@@ -93,10 +67,6 @@ Ext.define('Encore.mng.view.work.Work', {
                 defaults: { menuDisabled: true },
                 items: [
                     {text: '월', dataIndex: 'MM', width: 40, align: 'center', locked: true},
-                    {text: '프로젝트', dataIndex: 'PROJ_NM', width: 140, align: 'left', locked: true},
-                    {text: '근무일', dataIndex: 'WORK_DD', width: 60, align: 'center', locked: true},
-                    {text: '투입일', dataIndex: 'EMAIL', width: 60, align: 'center', locked: true},
-                    {text: '투입율', dataIndex: 'EMAIL', width: 60, align: 'center', locked: true},
                     {text: '1', dataIndex: 'D01', flex: 1, align: 'center',
                         renderer: function (value, meta, record) {
                             return Util.Calendar.cellRenderer(value, record.data.H01, meta);

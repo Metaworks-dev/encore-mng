@@ -1,18 +1,18 @@
-Ext.define('Encore.mng.view.work.WorkModel', {
+Ext.define('Encore.mng.view.holiday.HolidayModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.work-work',
+    alias: 'viewmodel.holiday-holiday',
     data: {
         name: 'Encore.mng'
     },
     stores: {
-        projWorkStore: {
+        empStore: {
             autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
-                    ns: 'projwork',
-                    id: 'getProjWorkCalList'
+                    ns: 'common',
+                    id: 'getHolidayCalendarList'
                 },
                 reader: {
                     type: 'json',

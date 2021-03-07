@@ -1,8 +1,8 @@
-Ext.define('Encore.mng.view.work.WorkController', {
+Ext.define('Encore.mng.view.holiday.HolidayController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.work-work',
+    alias: 'controller.holiday-holiday',
     onReload: function () {
-        this.lookupReference('projWorkGrid').store.reload();
+        this.lookupReference('calendarGrid').store.reload();
     },
     getYear: function () {
         var me = this;
@@ -37,7 +37,7 @@ Ext.define('Encore.mng.view.work.WorkController', {
     },
     onCelldblclick: function (obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
         var YYYY = this.lookupReference('YYYY').getValue();
-        var projWorkGrid = this.lookupReference('projWorkGrid');
+        var calendarGrid = this.lookupReference('calendarGrid');
 
         console.log(obj);
         console.log(td);
@@ -45,11 +45,12 @@ Ext.define('Encore.mng.view.work.WorkController', {
         console.log(cellIndex);
         console.log(rowIndex);
 
-        Ext.create('Encore.mng.view.work.popup.AddProjWork', {
+        Ext.create('Encore.mng.view.holiday.popup.AddHoliday', {
             YYYY: YYYY,
             DD: cellIndex + 1,
             MM: rowIndex + 1,
-            projWorkGrid: projWorkGrid
+            calendarGrid: calendarGrid
         }).show();
     },
+
 });
