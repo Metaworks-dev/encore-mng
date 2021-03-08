@@ -22,7 +22,7 @@
 	<!-- jdbc.resultset      :     WARN       WARN    -->
 	<!-- jdbc.resultsettable :     INFO       WARN    -->
 
-	<logger name="metaworks" additivity="false">
+	<logger name="encore" additivity="false">
 		<level value="DEBUG"/>
 		<appender-ref ref="console"/>
 	</logger>

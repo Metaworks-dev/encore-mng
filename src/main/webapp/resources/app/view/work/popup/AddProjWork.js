@@ -1,7 +1,7 @@
 Ext.define('Encore.mng.view.work.popup.AddProjWork',{
     extend: 'Ext.window.Window',
     width: 500,
-    height: 270,
+    height: 305,
     resizable: true,
     closable: true,
     maximizable: false,
@@ -79,12 +79,24 @@ Ext.define('Encore.mng.view.work.popup.AddProjWork',{
                         fields: ['name', 'value'],
                         data: [
                             {name: '근무', value: '근무'},
+                            {name: '휴일근무(4시간)', value: '휴일근무(4시간)'},
+                            {name: '휴일근무(8시간)', value: '휴일근무(8시간)'},
+                            {name: '출근주', value: '출근주'},
                             {name: '정기휴가', value: '정기휴가'},
                             {name: '오전반차', value: '오전반차'},
                             {name: '오후반차', value: '오후반차'},
                             {name: '건강검진', value: '건강검진'},
                         ]
                     })
+                },
+                {
+                    xtype: 'checkbox',
+                    itemId: 'HOLIDAY_CHK_CNT',
+                    name: 'HOLIDAY_CHK_CNT',
+                    reference: 'HOLIDAY_CHK_CNT',
+                    fieldLabel: '휴일제외여부',
+                    value: 'Y',
+                    allowBlank: false
                 },
                 {
                     xtype: 'datefield',

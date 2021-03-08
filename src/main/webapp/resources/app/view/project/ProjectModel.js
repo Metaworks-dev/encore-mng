@@ -22,13 +22,46 @@ Ext.define('Encore.mng.view.project.ProjectModel', {
             listeners: {
             }
         },
-        empStore: {
+        projEmpStore: {
             proxy: {
                 type: 'ajax',
                 url: 'json',
                 extraParams: {
                     ns: 'project',
                     id: 'getProjEmpList',
+                },
+                reader: {
+                    type: 'json',
+                    rootProperty: 'rows'
+                }
+            },
+            listeners: {
+            }
+        },
+        projEmpWorkStore: {
+            proxy: {
+                type: 'ajax',
+                url: 'json',
+                extraParams: {
+                    ns: 'project',
+                    id: 'getProjEmpList',
+                },
+                reader: {
+                    type: 'json',
+                    rootProperty: 'rows'
+                }
+            },
+            listeners: {
+            }
+        },
+        projEmpWorkSumStore: {
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: 'json',
+                extraParams: {
+                    ns: 'project',
+                    id: 'getProjWorkSum',
                 },
                 reader: {
                     type: 'json',

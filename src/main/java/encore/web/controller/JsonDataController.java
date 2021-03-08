@@ -257,7 +257,7 @@ public class JsonDataController {
 	}
 
 	private void printResultData(Map<String, Object> returnMap) {
-        int printSize = 3000;
+        int printSize = 300;
 		if (logger.isDebugEnabled()) {
 			String jsonData = gson.toJson(returnMap);
 

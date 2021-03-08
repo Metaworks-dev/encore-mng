@@ -5,7 +5,7 @@ Ext.define('Encore.mng.view.project.popup.AddEmploy',{
     resizable: true,
     closable: true,
     maximizable: false,
-    title: '프로젝트 등록',
+    title: '프로젝트 팀원 추가',
     titleCollapse: false,
     modal: true,
     closeAction: 'close',
@@ -69,11 +69,11 @@ Ext.define('Encore.mng.view.project.popup.AddEmploy',{
                     handler: 'onSearch'
                 },
                 '->',
-                {
-                    xtype: 'button',
-                    text: '추가',
-                    handler: 'onNew'
-                },
+                // {
+                //     xtype: 'button',
+                //     text: '추가',
+                //     handler: 'onNew'
+                // },
             ],
             bind: {
                 store: '{empStore}'

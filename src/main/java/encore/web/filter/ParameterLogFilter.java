@@ -29,8 +29,8 @@ public class ParameterLogFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         
         try {
-//        	if (request.getMethod().equals("POST")) {
-//                if (log.isDebugEnabled()) {
+        	if (request.getMethod().equals("POST")) {
+                if (log.isDebugEnabled()) {
                 	StringBuffer sb = new StringBuffer();
                 	sb.append("\n").append(StringUtils.repeat("-", 80));
                     sb.append("\n#  Parameter Log   ");
@@ -52,8 +52,8 @@ public class ParameterLogFilter implements Filter {
                     if (log.isDebugEnabled()) {
                     	log.debug(sb.toString());	
                     }
-//                }
-//        	}
+                }
+        	}
         } catch (Exception e) {
         	e.printStackTrace();
         }

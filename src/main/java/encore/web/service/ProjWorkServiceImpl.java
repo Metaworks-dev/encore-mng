@@ -28,7 +28,8 @@ public class ProjWorkServiceImpl implements ProjWorkService, ApplicationContextA
     @Override
     public Map txUpsertProjWork(HashMap params) throws DataAccessException {
         System.out.println("txUpsertProjWork");
-        commonDao.insert("projwork.insertProjWork", params);
+        int ret = (int) commonDao.insert("projwork.insertProjWork", params);
+        System.out.println("txUpsertProjWork:" + ret);
         return null;
     }
 

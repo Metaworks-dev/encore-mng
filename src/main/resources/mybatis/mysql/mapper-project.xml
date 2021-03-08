@@ -4,18 +4,21 @@
 
 	<select id="getProjList" parameterType="hashmap" resultType="hashmap">
 		SELECT /* project.getProjList */
-		       PROJ_ID, PROJ_NM, PROJ_STAT_CD, PROJ_START_DT, PROJ_END_DT, PROJ_EMP_CNT
-		     , date_format(REG_DTM,'%Y-%m-%d %H:%i:%s') REG_DTM
-		, date_format(MOD_DTM,'%Y-%m-%d %H:%i:%s') MOD_DTM
-		  FROM TB_PROJ
+		       A.PROJ_ID, A.PROJ_NM, A.PROJ_STAT_CD, A.PROJ_START_DT, A.PROJ_END_DT
+		      ,MAX(DATE_FORMAT(A.REG_DTM,'%Y-%m-%d %H:%i:%s')) REG_DTM
+		      ,MAX(DATE_FORMAT(A.MOD_DTM,'%Y-%m-%d %H:%i:%s')) MOD_DTM
+		      ,COUNT(B.EMP_ID) PROJ_EMP_CNT
+		  FROM TB_PROJ A
+		  LEFT OUTER JOIN TB_PROJ_EMP B ON A.PROJ_ID = B.PROJ_ID
 		 WHERE 1 = 1
 		<if test="PROJ_ID != null">
-			AND PROJ_ID = #{PROJ_ID}
+			AND A.PROJ_ID = #{PROJ_ID}
 		</if>
 		<if test="PROJ_NM != null">
-			AND PROJ_NM LIKE CONCAT('%', #{PROJ_NM}, '%')
+			AND A.PROJ_NM LIKE CONCAT('%', #{PROJ_NM}, '%')
 		</if>
-		ORDER BY PROJ_ID DESC
+		GROUP BY A.PROJ_ID, A.PROJ_NM, A.PROJ_STAT_CD, A.PROJ_START_DT, A.PROJ_END_DT
+		ORDER BY A.PROJ_ID DESC
 		<if test="start != null">
 			limit #{start}, #{limit}
 		</if>
@@ -81,7 +84,7 @@
 	<select id="getProjEmpList" parameterType="hashmap" resultType="hashmap">
 		SELECT /* project.getProjEmpList */
 		       A.PROJ_ID, A.EMP_ID, B.EMP_NO, B.EMP_NM, B.MNG_LVL, A.PROJ_ROLE, A.EMP_PROJ_START_DT, A.EMP_PROJ_END_DT
-		      ,A.EMP_PROJ_LVL, A.EMP_PRICE
+		      ,A.EMP_PROJ_LVL, A.EMP_PRICE, A.BASIC_QUAL, A.JOB_SKILL, A.OFFCE_ATTUDE
 		  FROM TB_PROJ_EMP A
 		 INNER JOIN TB_EMP B ON A.EMP_ID = B.EMP_ID
 		 WHERE 1 = 1
@@ -91,6 +94,7 @@
 		ORDER BY EMP_NM DESC
 	</select>
 
+
 	<insert id="insertProjEmp" parameterType="hashmap">
 		INSERT /* project.insertProjEmp */
 		  INTO TB_PROJ_EMP
@@ -99,6 +103,30 @@
 			(#{PROJ_ID}, #{EMP_ID}, #{PROJ_ROLE}, #{EMP_PROJ_START_DT}, #{EMP_PROJ_END_DT}, #{EMP_PROJ_LVL}, #{EMP_PRICE})
 	</insert>
 
+
+	<select id="getProjWorkSum" parameterType="hashmap" resultType="hashmap">
+		SELECT /* project.getProjWorkSum */
+		      A.PROJ_ID, A.EMP_ID, C.EMP_NO, C.EMP_NM
+			 ,DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%Y') YYYY
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 1 THEN 1 END) M01
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 2 THEN 1 END) M02
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 3 THEN 1 END) M03
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 4 THEN 1 END) M04
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 5 THEN 1 END) M05
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 6 THEN 1 END) M06
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 7 THEN 1 END) M07
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 8 THEN 1 END) M08
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 9 THEN 1 END) M09
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 10 THEN 1 END) M10
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 11 THEN 1 END) M11
+			 ,COUNT(CASE WHEN DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%m') = 12 THEN 1 END) M12
+		FROM TB_PROJ_EMP A
+		LEFT OUTER JOIN TB_PROJ_WORK B ON A.EMP_ID = B.EMP_ID  AND DATE_FORMAT(STR_TO_DATE(B.WORK_DT, '%Y-%m-%d'), '%Y') = '2021'
+		LEFT OUTER JOIN TB_EMP C ON A.EMP_ID = C.EMP_ID
+		WHERE 1 = 1
+		  AND A.PROJ_ID = #{PROJ_ID}
+		GROUP BY A.PROJ_ID, A.EMP_ID, C.EMP_NO, C.EMP_NM
+	</select>
 
 </mapper>
 

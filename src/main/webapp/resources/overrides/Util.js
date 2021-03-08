@@ -5,6 +5,8 @@ Util.Calendar = new (function () {
             meta.style = "background-color:#ADD8E6;font-size: smaller;";
         } else if (!Ext.isEmpty(hValue)) {
             meta.style = "background-color:#FFB6C1;font-size: smaller;";
+        } else {
+            meta.style = "font-size: smaller;";
         }
 
         if (!Ext.isEmpty(hValue) && !(hValue === '7' || hValue === '1')) {

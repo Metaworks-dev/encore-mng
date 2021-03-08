@@ -31,9 +31,13 @@ Ext.define('Encore.mng.view.project.ProjectController', {
         s.proxy.extraParams.PROJ_ID = PROJ_ID;
         s.reload();
 
+        var eg = this.lookupReference('projEmpWorkGrid').store;
+        eg.proxy.extraParams.PROJ_ID = PROJ_ID;
+        eg.reload();
+
         this.lookupReference('PROJ_ID').setValue(PROJ_ID);
     },
     onReload: function () {
-        this.lookupReference('employGrid').store.reload();
+        this.lookupReference('projectGrid').store.reload();
     }
 });
