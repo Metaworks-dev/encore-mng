@@ -107,6 +107,7 @@ Ext.define('Encore.mng.view.work.Work', {
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex) {
                             return Ext.String.format('{0}', value);
+                            // return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {

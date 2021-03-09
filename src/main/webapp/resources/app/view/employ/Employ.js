@@ -76,17 +76,34 @@ Ext.define('Encore.mng.view.employ.Employ', {
                             dock: 'bottom'
                         }
                     ],
-                    columns: [
-                        // {xtype: 'rownumberer', width: 35},
-                        {text: 'EMP_ID', dataIndex: 'EMP_ID', hidden: true, hideable: false},
-                        {text: '사번', dataIndex: 'EMP_NO', flex: 0.5, align: 'center'},
-                        {text: 'E-mail', dataIndex: 'EMAIL', flex: 2, align: 'left'},
-                        {text: 'Password', dataIndex: 'PASSWD', flex: 1, align: 'left'},
-                        {text: '이름', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
-                        {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
-                        {text: '입사일자', dataIndex: 'ENT_DT', flex: 1, align: 'center'}
-                    ],
+                    columns: {
+                        defaults: {menuDisabled: true},
+                        items: [
+                            // {xtype: 'rownumberer', width: 35},
+                            {text: 'EMP_ID', dataIndex: 'EMP_ID', hidden: true, hideable: false},
+                            {text: '사번', dataIndex: 'EMP_NO', flex: 0.5, align: 'center'},
+                            {text: 'E-mail', dataIndex: 'EMAIL', flex: 2, align: 'left'},
+                            {text: 'Password', dataIndex: 'PASSWD', flex: 1, align: 'left'},
+                            {text: '이름', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
+                            {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
+                            {text: '입사일자', dataIndex: 'ENT_DT', flex: 1, align: 'center'}
+                        ]
+                    },
                     listeners: {
+                        itemcontextmenu: function (grid, record, item, index, e) {
+                            var contextMenu = Ext.create('Ext.menu.Menu', {
+                                // height: 200,
+                                // width: 250,
+                                items: [{
+                                    text:'Preview',
+                                    handler: function () {
+                                        //code...
+                                    }
+                                }]
+                            });
+                            e.stopEvent();
+                            contextMenu.showAt(e.getXY());
+                        },
                         itemdblclick: 'onItemdblclick'
                     }
                 },

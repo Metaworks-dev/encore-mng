@@ -55,7 +55,6 @@ Ext.define('Encore.mng.view.project.ProjectModel', {
             }
         },
         projEmpWorkSumStore: {
-            autoLoad: true,
             proxy: {
                 type: 'ajax',
                 url: 'json',

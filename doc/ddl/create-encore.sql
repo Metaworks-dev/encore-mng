@@ -75,4 +75,15 @@ from (
      ) a
          cross join COPY_T b on a.dt_cnt >= b.no
 order by 1, 2
+;
 
+
+CREATE FUNCTION encore.FN_GET_WORK_DT_VAL(P_WORK_DT VARCHAR(20), P_WORK_STAT_CD VARCHAR(20))
+    RETURNS FLOAT
+BEGIN
+  DECLARE returnVal FLOAT;
+  SET returnVal = CASE WHEN P_WORK_DT IS NOT NULL AND P_WORK_STAT_CD = '근무' THEN 1
+                       WHEN P_WORK_DT IS NOT NULL AND P_WORK_STAT_CD IN ('출근주', '오전반차', '오후반차') THEN 1
+END;
+RETURN returnVal;
+END

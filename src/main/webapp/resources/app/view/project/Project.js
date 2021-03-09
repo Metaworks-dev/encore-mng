@@ -1,4 +1,4 @@
-Ext.define('Encore.mng.view.project.Project',{
+Ext.define('Encore.mng.view.project.Project', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.project',
     requires: [
@@ -34,6 +34,12 @@ Ext.define('Encore.mng.view.project.Project',{
                                     text: '새로고침',
                                     handler: 'onReload'
                                 },
+                                {
+                                    xtype: 'hidden',
+                                    reference: 'PROJ_ID',
+                                    itemId: 'PROJ_ID',
+                                    name: 'PROJ_ID'
+                                },
                                 '->',
                                 {
                                     xtype: 'button',
@@ -44,14 +50,17 @@ Ext.define('Encore.mng.view.project.Project',{
                             bind: {
                                 store: '{projStore}'
                             },
-                            columns: [
-                                {text: 'PROJ_ID', dataIndex: 'PROJ_ID', hidden: true, hideable: false},
-                                {text: '프로젝트명', dataIndex: 'PROJ_NM', flex: 3, align: 'left'},
-                                {text: '상태', dataIndex: 'PROJ_STAT_CD', flex: 1, align: 'center'},
-                                {text: '시작일자', dataIndex: 'PROJ_START_DT', flex: 1.5, align: 'center'},
-                                {text: '종료일자', dataIndex: 'PROJ_END_DT', flex: 1.5, align: 'center'},
-                                {text: '인원', dataIndex: 'PROJ_EMP_CNT', flex: 1, align: 'center'},
-                            ],
+                            columns: {
+                                defaults: {menuDisabled: true},
+                                items: [
+                                    {text: 'PROJ_ID', dataIndex: 'PROJ_ID', hidden: true, hideable: false},
+                                    {text: '프로젝트명', dataIndex: 'PROJ_NM', flex: 3, align: 'left'},
+                                    {text: '상태', dataIndex: 'PROJ_STAT_CD', flex: 1, align: 'center'},
+                                    {text: '시작일자', dataIndex: 'PROJ_START_DT', flex: 1.5, align: 'center'},
+                                    {text: '종료일자', dataIndex: 'PROJ_END_DT', flex: 1.5, align: 'center'},
+                                    {text: '인원', dataIndex: 'PROJ_EMP_CNT', flex: 1, align: 'center'},
+                                ]
+                            },
                             listeners: {
                                 itemdblclick: 'onItemdblclick',
                                 itemclick: 'onItemclick'
@@ -61,11 +70,16 @@ Ext.define('Encore.mng.view.project.Project',{
                             xtype: 'tabpanel',
                             region: 'east',
                             collapsible: true,
+                            itemId: 'projectTabpanel',
+                            reference: 'projectTabpanel',
                             split: true,
                             header: false,
                             tabPosition: 'bottom',
                             flex: 3,
                             layout: 'border',
+                            listeners: {
+                                tabchange: 'onTabchange'
+                            },
                             items: [
                                 {
                                     xtype: 'panel',
@@ -91,12 +105,6 @@ Ext.define('Encore.mng.view.project.Project',{
                                                     + '</div>' + '</div>', '프로젝트를 선택해 주세요'),
                                             loadingText: 'loading',
                                             tbar: [
-                                                {
-                                                    xtype: 'hidden',
-                                                    reference: 'PROJ_ID',
-                                                    itemId: 'PROJ_ID',
-                                                    name: 'PROJ_ID'
-                                                },
                                                 {
                                                     fieldLabel: '이름',
                                                     labelWidth: 45,
@@ -126,24 +134,43 @@ Ext.define('Encore.mng.view.project.Project',{
                                                 '->',
                                                 {
                                                     xtype: 'button',
-                                                    text: '구성원 추가',
+                                                    text: '추가',
                                                     handler: 'onNewEmp'
                                                 },
+                                                {
+                                                    xtype: 'button',
+                                                    text: '삭제',
+                                                    handler: 'onDeleteEmploy'
+                                                }
                                             ],
                                             bind: {
                                                 store: '{projEmpStore}'
                                             },
                                             columns: {
-                                                defaults: { menuDisabled: true },
+                                                defaults: {menuDisabled: true},
                                                 items: [
-                                                    {text: 'PROJ_ID', dataIndex: 'PROJ_ID', hidden: true, hideable: false},
-                                                    {text: 'EMP_ID', dataIndex: 'EMP_ID', hidden: true, hideable: false},
+                                                    {
+                                                        text: 'EMP_ID',
+                                                        dataIndex: 'EMP_ID',
+                                                        hidden: true,
+                                                        hideable: false
+                                                    },
                                                     {text: '사번', dataIndex: 'EMP_NO', flex: 0.5, align: 'center'},
                                                     {text: '이름', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
                                                     {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
                                                     {text: '역할', dataIndex: 'PROJ_ROLE', flex: 1, align: 'center'},
-                                                    {text: '투입일자', dataIndex: 'EMP_PROJ_START_DT', flex: 1, align: 'center'},
-                                                    {text: '종료일자', dataIndex: 'EMP_PROJ_END_DT', flex: 1, align: 'center'},
+                                                    {
+                                                        text: '투입일자',
+                                                        dataIndex: 'EMP_PROJ_START_DT',
+                                                        flex: 1,
+                                                        align: 'center'
+                                                    },
+                                                    {
+                                                        text: '종료일자',
+                                                        dataIndex: 'EMP_PROJ_END_DT',
+                                                        flex: 1,
+                                                        align: 'center'
+                                                    },
 
                                                     // {
                                                     //     text: '평가요소',
@@ -165,6 +192,20 @@ Ext.define('Encore.mng.view.project.Project',{
                                                 ]
                                             },
                                             listeners: {
+                                                itemcontextmenu: function (grid, record, item, index, e) {
+                                                    var contextMenu = Ext.create('Ext.menu.Menu', {
+                                                        // height: 200,
+                                                        // width: 250,
+                                                        items: [{
+                                                            text:'Preview',
+                                                            handler: function () {
+                                                                //code...
+                                                            }
+                                                        }]
+                                                    });
+                                                    e.stopEvent();
+                                                    contextMenu.showAt(e.getXY());
+                                                },
                                                 itemdblclick: 'onItemdblclick'
                                             }
                                         }
@@ -239,23 +280,31 @@ Ext.define('Encore.mng.view.project.Project',{
                                                 columnLines: true,
                                             },
                                             columns: {
-                                                defaults: { menuDisabled: true },
+                                                defaults: {menuDisabled: true},
                                                 items: [
-                                                    {text: 'PROJ_ID', dataIndex: 'PROJ_ID', hidden: true, hideable: false   , locked: true},
-                                                    {text: 'EMP_ID', dataIndex: 'EMP_ID', hidden: true, hideable: false   , locked: true},
-                                                    {text: '사번', dataIndex: 'EMP_NO', width: 50, align: 'center'
+                                                    {
+                                                        text: 'EMP_ID',
+                                                        dataIndex: 'EMP_ID',
+                                                        hidden: true,
+                                                        hideable: false,
+                                                        locked: true
+                                                    },
+                                                    {
+                                                        text: '사번', dataIndex: 'EMP_NO', width: 50, align: 'center'
                                                         , locked: true
                                                     },
-                                                    {text: '이름', dataIndex: 'EMP_NM', width: 70, align: 'center'
+                                                    {
+                                                        text: '이름', dataIndex: 'EMP_NM', width: 70, align: 'center'
                                                         , locked: true
                                                     },
-                                                    {text: '직급', dataIndex: 'MNG_LVL', width: 70, align: 'center'
+                                                    {
+                                                        text: '직급', dataIndex: 'MNG_LVL', width: 70, align: 'center'
                                                         , locked: true
                                                     },
                                                     // {text: '역할', dataIndex: 'MNG_LVL', width: 60, align: 'center'
-                                                        // , locked: true
+                                                    // , locked: true
                                                     // },
-                                                    {text: '단가', dataIndex: 'EMP_PRICE',  width: 80, align: 'center'},
+                                                    {text: '단가', dataIndex: 'EMP_PRICE', width: 80, align: 'center'},
                                                     {
                                                         text: '기본자질',
                                                         dataIndex: 'BASIC_QUAL',
@@ -284,12 +333,26 @@ Ext.define('Encore.mng.view.project.Project',{
                                                 ]
                                             },
                                             listeners: {
+                                                itemcontextmenu: function (grid, record, item, index, e) {
+                                                    var contextMenu = Ext.create('Ext.menu.Menu', {
+                                                        // height: 200,
+                                                        // width: 250,
+                                                        items: [{
+                                                            text:'Preview',
+                                                            handler: function () {
+                                                                //code...
+                                                            }
+                                                        }]
+                                                    });
+                                                    e.stopEvent();
+                                                    contextMenu.showAt(e.getXY());
+                                                },
                                                 itemdblclick: 'onItemdblclick'
                                             }
                                         }
                                     ]
                                 },
-                            ]
+                            ],
                         }
                     ]
                 },

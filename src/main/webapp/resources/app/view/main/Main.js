@@ -108,14 +108,14 @@ Ext.define('Encore.mng.view.main.Main', {
     ],
     items: [
         {
-            title: 'Dashboard',
-            layout: 'border',
-            items: [
-                {
-                    xtype: 'dashboard',
-                    region: 'center'
-                }]
-        }, {
+        //     title: 'Dashboard',
+        //     layout: 'border',
+        //     items: [
+        //         {
+        //             xtype: 'dashboard',
+        //             region: 'center'
+        //         }]
+        // }, {
             title: '직원 관리',
             layout: 'border',
             items: [

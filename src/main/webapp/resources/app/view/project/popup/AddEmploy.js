@@ -42,6 +42,13 @@ Ext.define('Encore.mng.view.project.popup.AddEmploy',{
                 //     text: '새로고침',
                 //     handler: 'onReload'
                 // },
+                // {
+                //     xtype: 'checkbox',
+                //     fieldLabel: '투입인력제외',
+                //     disabled: false,
+                //     handler: 'onSearch'
+                // },
+                // '-',
                 {
                     fieldLabel: '이름',
                     labelWidth: 45,
