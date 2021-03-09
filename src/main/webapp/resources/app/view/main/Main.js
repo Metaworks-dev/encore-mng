@@ -7,7 +7,6 @@ Ext.define('Encore.mng.view.main.Main', {
         'Ext.window.MessageBox',
         'Encore.mng.view.main.MainController',
         'Encore.mng.view.main.MainModel',
-        'Encore.mng.view.dashboard.Dashboard',
         'Encore.mng.view.project.Project',
         'Encore.mng.view.employ.Employ',
     ],
