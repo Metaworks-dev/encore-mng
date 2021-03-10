@@ -104,6 +104,18 @@
 	</insert>
 
 
+	<update id="updateProjEmp" parameterType="hashmap">
+		UPDATE /* project.updateProjEmp */
+			TB_PROJ_EMP
+		SET PROJ_ROLE = IFNULL(#{PROJ_ROLE}, PROJ_ROLE)
+		  ,EMP_PROJ_START_DT = IFNULL(SUBSTR(#{EMP_PROJ_START_DT}, 1, 10), EMP_PROJ_START_DT)
+		  ,EMP_PROJ_END_DT = IFNULL(#{EMP_PROJ_END_DT}, EMP_PROJ_END_DT)
+		  ,EMP_PROJ_LVL = IFNULL(#{EMP_PROJ_LVL}, EMP_PROJ_LVL)
+		WHERE 1 = 1
+		  AND EMP_ID = #{EMP_ID}
+	</update>
+
+
 	<select id="getProjWorkSum" parameterType="hashmap" resultType="hashmap">
 		SELECT /* project.getProjWorkSum */
 		      A.PROJ_ID, A.EMP_ID, C.EMP_NO, C.EMP_NM

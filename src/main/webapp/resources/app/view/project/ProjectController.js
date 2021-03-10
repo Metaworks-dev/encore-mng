@@ -12,6 +12,44 @@ Ext.define('Encore.mng.view.project.ProjectController', {
             PROJ_ID: PROJ_ID
         }).show();
     },
+    onCellUpdate: function (el, c) {
+      console.log('onCellUpdate');
+        el.grid.store.getAt(c.rowIdx).commit();
+
+        console.log(c);
+
+        Ext.Ajax.request({
+            async: false,
+            url: '/json',
+            method: 'POST',
+            params: {
+                ns: 'project',
+                id: 'updateProjEmp',
+                EMP_ID: c.record.data.EMP_ID,
+                EMP_PROJ_START_DT: c.record.data.EMP_PROJ_START_DT,
+                EMP_PROJ_END_DT: c.record.data.EMP_PROJ_END_DT,
+                PROJ_ROLE: c.record.data.PROJ_ROLE,
+                EMP_PRICE: c.record.data.EMP_PRICE
+            },
+            success: function (response) {
+                var obj = Ext.decode(response.responseText);
+                console.log(obj);
+                el.grid.store.getAt(c.rowIdx).commit();
+            },
+            callback: function (opt, success, response) {
+                console.log('callback..');
+            },
+            failure: function (response) {
+                Ext.MessageBox.show({
+                    title: 'Connection Error',
+                    message: 'Database Server Connection Error',
+                    buttons: Ext.MessageBox.OK,
+                    icon: Ext.MessageBox.WARNING
+                });
+            }
+        });
+
+    },
     onSearch: function() {
         var s = this.lookupReference('projectGrid').store;
         var PROJ_NM = this.lookupReference('PROJ_NM').getValue();
