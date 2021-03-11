@@ -97,6 +97,7 @@ Ext.define('Encore.mng.view.work.Work', {
                     },
                     {
                         text: '근무일', dataIndex: 'WORK_DD', width: 60, align: 'center', locked: true,
+                        type: 'float',
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex) {
                             return value;
@@ -105,6 +106,7 @@ Ext.define('Encore.mng.view.work.Work', {
                     },
                     {
                         text: '투입일', dataIndex: 'PROJ_WORK_DD', width: 60, align: 'center', locked: true,
+                        type: 'float',
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex) {
                             return Ext.String.format('{0}', value);
@@ -113,10 +115,11 @@ Ext.define('Encore.mng.view.work.Work', {
                     },
                     {
                         text: '투입율(%)', dataIndex: 'PROJ_WORK_RATE', width: 80, align: 'center', locked: true,
-                        // summaryType: 'average',
-                        // summaryRenderer: function (value, summaryData, dataIndex) {
-                        //     return Ext.String.format('{0}', value);
-                        // }
+                        // type: 'float',
+                        summaryType: 'average',
+                        summaryRenderer: function (value, summaryData, dataIndex) {
+                            return Ext.Number.roundToPrecision(value);
+                        }
                     },
                     {
                         text: '1', dataIndex: 'D01', flex: 1, align: 'center',

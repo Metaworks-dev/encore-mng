@@ -146,9 +146,19 @@ Ext.define('Encore.mng.view.project.Project', {
                                             bind: {
                                                 store: '{projEmpStore}'
                                             },
+                                            viewConfig: {
+                                                stripeRows: false,
+                                                columnLines: true,
+                                            },
                                             columns: {
                                                 defaults: {menuDisabled: true},
                                                 items: [
+                                                    {
+                                                        text: 'PROJ_ID',
+                                                        dataIndex: 'PROJ_ID',
+                                                        hidden: true,
+                                                        hideable: false
+                                                    },
                                                     {
                                                         text: 'EMP_ID',
                                                         dataIndex: 'EMP_ID',
@@ -158,37 +168,69 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     {text: '사번', dataIndex: 'EMP_NO', flex: 0.5, align: 'center'},
                                                     {text: '이름', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
                                                     {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
-                                                    {text: '역할', dataIndex: 'PROJ_ROLE', flex: 1, align: 'center'},
+                                                    {
+                                                        text: '역할', dataIndex: 'PROJ_ROLE', flex: 1, align: 'center',
+                                                        // renderer : function(value, meta, record) {
+                                                        //     meta.style = "background-color:#f0f5f5;";
+                                                        //     return value;
+                                                        // },
+                                                        editor: new Ext.form.field.ComboBox({
+                                                            typeAhead: true,
+                                                            triggerAction: 'all',
+                                                            displayField: 'name',
+                                                            valueField: 'value',
+                                                            selectOnTab: true,
+                                                            store: Ext.create('Ext.data.Store', {
+                                                                fields: ['name', 'value'],
+                                                                data: [
+                                                                    {name: 'PM', value: 'PM'},
+                                                                    {name: '팀원', value: '팀원'},
+                                                                ]
+                                                            }),
+                                                            lazyRender: true,
+                                                            listClass: 'x-combo-list-small'
+                                                        })
+                                                    },
                                                     {
                                                         text: '투입일자',
                                                         dataIndex: 'EMP_PROJ_START_DT',
+                                                        xtype: 'datecolumn',
+                                                        format: 'Y-m-d',
                                                         flex: 1,
-                                                        align: 'center'
+                                                        align: 'center',
+                                                        // renderer : function(value, meta, record) {
+                                                        //     meta.style = "background-color:#f0f5f5;";
+                                                        //     return value;
+                                                        // },
+                                                        editor: {
+                                                            field: {
+                                                                xtype: 'datefield',
+                                                                format: 'Y-m-d',
+                                                                submitFormat: 'Y-m-d',
+                                                                allowBlank: false
+                                                            }
+                                                        }
                                                     },
                                                     {
                                                         text: '종료일자',
                                                         dataIndex: 'EMP_PROJ_END_DT',
                                                         flex: 1,
-                                                        align: 'center'
+                                                        xtype: 'datecolumn',
+                                                        format: 'Y-m-d',
+                                                        align: 'center',
+                                                        // renderer : function(value, meta, record) {
+                                                        //     meta.style = "background-color:#f0f5f5;";
+                                                        //     return value;
+                                                        // },
+                                                        editor: {
+                                                            field: {
+                                                                xtype: 'datefield',
+                                                                format: 'Y-m-d',
+                                                                submitFormat: 'Y-m-d',
+                                                                allowBlank: false
+                                                            }
+                                                        }
                                                     },
-
-                                                    // {
-                                                    //     text: '평가요소',
-                                                    //     defaults: { menuDisabled: true },
-                                                    //     columns: [{
-                                                    //         text: '기본자질',
-                                                    //         dataIndex: 'BASIC_QUAL',
-                                                    //         width: 75,
-                                                    //     }, {
-                                                    //         text: '직무수행능력',
-                                                    //         dataIndex: 'JOB_SKILL',
-                                                    //         width: 80,
-                                                    //     }, {
-                                                    //         text: '직무수행태도',
-                                                    //         dataIndex: 'OFFCE_ATTUDE',
-                                                    //         width: 100
-                                                    //     }]
-                                                    // }
                                                 ]
                                             },
                                             listeners: {
@@ -238,6 +280,13 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     + '<div style="#position: relative; #top: -50%;font-size:12px;">{0}</div>'
                                                     + '</div>' + '</div>', '프로젝트를 선택해 주세요'),
                                             loadingText: 'loading',
+                                            plugins: {
+                                                ptype: 'cellediting',
+                                                clicksToEdit: 2,
+                                                listeners: {
+                                                    edit: 'onCellUpdate'
+                                                }
+                                            },
                                             tbar: [
                                                 {
                                                     fieldLabel: '이름',
@@ -279,6 +328,9 @@ Ext.define('Encore.mng.view.project.Project', {
                                                 stripeRows: false,
                                                 columnLines: true,
                                             },
+                                            features: [{
+                                                ftype: 'summary'
+                                            }],
                                             columns: {
                                                 defaults: {menuDisabled: true},
                                                 items: [
@@ -291,7 +343,9 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     },
                                                     {
                                                         text: '사번', dataIndex: 'EMP_NO', width: 50, align: 'center'
-                                                        , locked: true
+                                                        , locked: true,
+                                                        flex: 1,
+                                                        align: 'center',
                                                     },
                                                     {
                                                         text: '이름', dataIndex: 'EMP_NM', width: 70, align: 'center'
@@ -304,32 +358,182 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     // {text: '역할', dataIndex: 'MNG_LVL', width: 60, align: 'center'
                                                     // , locked: true
                                                     // },
-                                                    {text: '단가', dataIndex: 'EMP_PRICE', width: 80, align: 'center'},
+                                                    // {text: '단가', dataIndex: 'EMP_PRICE', width: 80, align: 'center',
+                                                    //     renderer : function(value, meta, record) {
+                                                    //         meta.style = "background-color:#f5f5f0;";
+                                                    //         return Ext.util.Format.number(value, "0,000");
+                                                    //     },
+                                                    //     editor: {
+                                                    //         field: {
+                                                    //             xtype: 'textfield',
+                                                    //             allowBlank: false
+                                                    //         }
+                                                    //     }
+                                                    // },
                                                     {
                                                         text: '기본자질',
                                                         dataIndex: 'BASIC_QUAL',
-                                                        width: 80,
+                                                        width: 100,
+                                                        align: 'center',
+                                                        renderer : function(value, meta, record) {
+                                                            meta.style = "background-color:#f5f5f0;";
+                                                            return value;
+                                                        },
+                                                        editor: new Ext.form.field.ComboBox({
+                                                            typeAhead: true,
+                                                            triggerAction: 'all',
+                                                            displayField: 'name',
+                                                            valueField: 'value',
+                                                            selectOnTab: true,
+                                                            store: Ext.create('Ext.data.Store', {
+                                                                fields: ['name', 'value'],
+                                                                data: [
+                                                                    {name: '탁월', value: '탁월'},
+                                                                    {name: '우수', value: '우수'},
+                                                                    {name: '양호', value: '양호'},
+                                                                    {name: '보통', value: '보통'},
+                                                                    {name: '미흡', value: '미흡'},
+                                                                ]
+                                                            }),
+                                                            lazyRender: true,
+                                                            listClass: 'x-combo-list-small'
+                                                        })
                                                     }, {
                                                         text: '직무수행능력',
                                                         dataIndex: 'JOB_SKILL',
                                                         width: 100,
+                                                        align: 'center',
+                                                        renderer : function(value, meta, record) {
+                                                            meta.style = "background-color:#f0f5f5;";
+                                                            return value;
+                                                        },
+                                                        editor: new Ext.form.field.ComboBox({
+                                                            typeAhead: true,
+                                                            triggerAction: 'all',
+                                                            displayField: 'name',
+                                                            valueField: 'value',
+                                                            selectOnTab: true,
+                                                            store: Ext.create('Ext.data.Store', {
+                                                                fields: ['name', 'value'],
+                                                                data: [
+                                                                    {name: '탁월', value: '탁월'},
+                                                                    {name: '우수', value: '우수'},
+                                                                    {name: '양호', value: '양호'},
+                                                                    {name: '보통', value: '보통'},
+                                                                    {name: '미흡', value: '미흡'},
+                                                                ]
+                                                            }),
+                                                            lazyRender: true,
+                                                            listClass: 'x-combo-list-small'
+                                                        })
                                                     }, {
                                                         text: '직무수행태도',
                                                         dataIndex: 'OFFCE_ATTUDE',
                                                         width: 100,
+                                                        align: 'center',
+                                                        renderer : function(value, meta, record) {
+                                                            meta.style = "background-color:#f0f5f5;";
+                                                            return value;
+                                                        },
+                                                        editor: new Ext.form.field.ComboBox({
+                                                            typeAhead: true,
+                                                            triggerAction: 'all',
+                                                            displayField: 'name',
+                                                            valueField: 'value',
+                                                            selectOnTab: true,
+                                                            store: Ext.create('Ext.data.Store', {
+                                                                fields: ['name', 'value'],
+                                                                data: [
+                                                                    {name: '탁월', value: '탁월'},
+                                                                    {name: '우수', value: '우수'},
+                                                                    {name: '양호', value: '양호'},
+                                                                    {name: '보통', value: '보통'},
+                                                                    {name: '미흡', value: '미흡'},
+                                                                ]
+                                                            }),
+                                                            lazyRender: true,
+                                                            listClass: 'x-combo-list-small'
+                                                        })
                                                     },
-                                                    {text: '1월', dataIndex: 'M01', width: 50, align: 'center'},
-                                                    {text: '2월', dataIndex: 'M02', width: 50, align: 'center'},
-                                                    {text: '3월', dataIndex: 'M03', width: 50, align: 'center'},
-                                                    {text: '4월', dataIndex: 'M04', width: 50, align: 'center'},
-                                                    {text: '5월', dataIndex: 'M05', width: 50, align: 'center'},
-                                                    {text: '6월', dataIndex: 'M06', width: 50, align: 'center'},
-                                                    {text: '7월', dataIndex: 'M07', width: 50, align: 'center'},
-                                                    {text: '8월', dataIndex: 'M08', width: 50, align: 'center'},
-                                                    {text: '9월', dataIndex: 'M09', width: 50, align: 'center'},
-                                                    {text: '10월', dataIndex: 'M10', width: 50, align: 'center'},
-                                                    {text: '11월', dataIndex: 'M11', width: 50, align: 'center'},
-                                                    {text: '12월', dataIndex: 'M12', width: 50, align: 'center'},
+                                                    {
+                                                        text: '1월', dataIndex: 'M01', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '2월', dataIndex: 'M02', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '3월', dataIndex: 'M03', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }
+                                                    },
+                                                    {text: '4월', dataIndex: 'M04', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }
+                                                    },
+                                                    {text: '5월', dataIndex: 'M05', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '6월', dataIndex: 'M06', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '7월', dataIndex: 'M07', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '8월', dataIndex: 'M08', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '9월', dataIndex: 'M09', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '10월', dataIndex: 'M10', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '11월', dataIndex: 'M11', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
+                                                    {text: '12월', dataIndex: 'M12', width: 60, align: 'center',
+                                                        type: 'float',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                                            return Ext.String.format('{0}', value);
+                                                        }},
                                                 ]
                                             },
                                             listeners: {
@@ -338,7 +542,7 @@ Ext.define('Encore.mng.view.project.Project', {
                                                         // height: 200,
                                                         // width: 250,
                                                         items: [{
-                                                            text:'Preview',
+                                                            text: 'Preview',
                                                             handler: function () {
                                                                 //code...
                                                             }
@@ -347,7 +551,7 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     e.stopEvent();
                                                     contextMenu.showAt(e.getXY());
                                                 },
-                                                itemdblclick: 'onItemdblclick'
+                                                // itemdblclick: 'onItemdblclick'
                                             }
                                         }
                                     ]
