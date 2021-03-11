@@ -25,6 +25,12 @@ Ext.define('Encore.mng.view.employ.Employ', {
                     viewConfig: {
                         enableTextSelection: true
                     },
+                    features: [{
+                        ftype: 'grouping',
+                        groupHeaderTpl: '{name}',
+//                hideGroupedHeader: true,
+//                enableGroupingMenu: true
+                    }],
                     tbar: [
                         {
                             xtype: 'button',

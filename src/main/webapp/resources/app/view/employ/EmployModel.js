@@ -26,6 +26,7 @@ Ext.define('Encore.mng.view.employ.EmployModel', {
                     rootProperty: 'rows'
                 }
             },
+            groupField: 'DEPT',
             listeners: {
             }
         },
