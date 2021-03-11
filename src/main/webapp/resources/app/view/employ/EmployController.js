@@ -19,5 +19,8 @@ Ext.define('Encore.mng.view.employ.EmployController', {
     },
     onReload: function () {
         this.lookupReference('employGrid').store.reload();
+    },
+    onReload2: function () {
+        this.lookupReference('projEmpWorkGrid').store.reload();
     }
 });

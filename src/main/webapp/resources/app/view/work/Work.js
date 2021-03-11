@@ -99,7 +99,8 @@ Ext.define('Encore.mng.view.work.Work', {
                         text: '근무일', dataIndex: 'WORK_DD', width: 60, align: 'center', locked: true,
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex) {
-                            return Ext.String.format('{0}', value);
+                            return value;
+                            // return Ext.String.format('{0}', value);
                         }
                     },
                     {

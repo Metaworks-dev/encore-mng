@@ -1,12 +1,12 @@
 Ext.define('Encore.mng.view.main.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'app-main',
-
     requires: [
         'Ext.plugin.Viewport',
         'Ext.window.MessageBox',
         'Encore.mng.view.main.MainController',
         'Encore.mng.view.main.MainModel',
+        'Encore.mng.view.profit.Profit',
         'Encore.mng.view.project.Project',
         'Encore.mng.view.employ.Employ',
     ],
@@ -107,14 +107,22 @@ Ext.define('Encore.mng.view.main.Main', {
     ],
     items: [
         {
-        //     title: 'Dashboard',
-        //     layout: 'border',
-        //     items: [
-        //         {
-        //             xtype: 'dashboard',
-        //             region: 'center'
-        //         }]
-        // }, {
+            title: 'Dashboard',
+            layout: 'border',
+            items: [
+                {
+                    xtype: 'edashboard',
+                    region: 'center'
+                }]
+        }, {
+            title: '손익 관리',
+            layout: 'border',
+            items: [
+                {
+                    xtype: 'profit',
+                    region: 'center'
+                }]
+        }, {
             title: '직원 관리',
             layout: 'border',
             items: [

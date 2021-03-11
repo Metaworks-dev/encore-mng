@@ -104,13 +104,6 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     + '<div style="#position: relative; #top: -50%;font-size:12px;">{0}</div>'
                                                     + '</div>' + '</div>', '프로젝트를 선택해 주세요'),
                                             loadingText: 'loading',
-                                            plugins: {
-                                                ptype: 'cellediting',
-                                                clicksToEdit: 2,
-                                                listeners: {
-                                                    edit: 'onCellUpdate'
-                                                }
-                                            },
                                             tbar: [
                                                 {
                                                     fieldLabel: '이름',
@@ -165,44 +158,37 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     {text: '사번', dataIndex: 'EMP_NO', flex: 0.5, align: 'center'},
                                                     {text: '이름', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
                                                     {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
-                                                    {text: '역할', dataIndex: 'PROJ_ROLE', flex: 1, align: 'center',
-                                                        editor: new Ext.form.field.ComboBox({
-                                                            typeAhead: true,
-                                                            triggerAction: 'all',
-                                                            displayField: 'name',
-                                                            valueField: 'value',
-                                                            selectOnTab: true,
-                                                            store: Ext.create('Ext.data.Store', {
-                                                                fields: ['name', 'value'],
-                                                                data: [
-                                                                    {name: 'PM', value: 'PM'},
-                                                                    {name: '팀원', value: '팀원'},
-                                                                ]
-                                                            }),
-                                                            lazyRender: true,
-                                                            listClass: 'x-combo-list-small'
-                                                        })
-                                                    },
+                                                    {text: '역할', dataIndex: 'PROJ_ROLE', flex: 1, align: 'center'},
                                                     {
                                                         text: '투입일자',
                                                         dataIndex: 'EMP_PROJ_START_DT',
                                                         flex: 1,
-                                                        align: 'center',
+                                                        align: 'center'
                                                     },
                                                     {
                                                         text: '종료일자',
                                                         dataIndex: 'EMP_PROJ_END_DT',
                                                         flex: 1,
-                                                        align: 'center',
-                                                        // editor: {
-                                                        //     field: {
-                                                        //         xtype: 'datefield',
-                                                        //         format: 'Y-m-d',
-                                                        //         submitFormat:'Y-m-d',
-                                                        //         allowBlank: false
-                                                        //     }
-                                                        // }
+                                                        align: 'center'
                                                     },
+
+                                                    // {
+                                                    //     text: '평가요소',
+                                                    //     defaults: { menuDisabled: true },
+                                                    //     columns: [{
+                                                    //         text: '기본자질',
+                                                    //         dataIndex: 'BASIC_QUAL',
+                                                    //         width: 75,
+                                                    //     }, {
+                                                    //         text: '직무수행능력',
+                                                    //         dataIndex: 'JOB_SKILL',
+                                                    //         width: 80,
+                                                    //     }, {
+                                                    //         text: '직무수행태도',
+                                                    //         dataIndex: 'OFFCE_ATTUDE',
+                                                    //         width: 100
+                                                    //     }]
+                                                    // }
                                                 ]
                                             },
                                             listeners: {
@@ -220,7 +206,7 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     e.stopEvent();
                                                     contextMenu.showAt(e.getXY());
                                                 },
-                                                // itemdblclick: 'onItemdblclick'
+                                                itemdblclick: 'onItemdblclick'
                                             }
                                         }
                                     ]

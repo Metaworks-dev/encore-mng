@@ -29,5 +29,22 @@ Ext.define('Encore.mng.view.employ.EmployModel', {
             listeners: {
             }
         },
+        projEmpWorkSumStore: {
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: 'json',
+                extraParams: {
+                    ns: 'employ',
+                    id: 'getProjWorkSum',
+                },
+                reader: {
+                    type: 'json',
+                    rootProperty: 'rows'
+                }
+            },
+            listeners: {
+            }
+        },
     }
 });

@@ -86,7 +86,11 @@ Ext.define('Encore.mng.view.employ.Employ', {
                             {text: 'Password', dataIndex: 'PASSWD', flex: 1, align: 'left'},
                             {text: '이름', dataIndex: 'EMP_NM', flex: 1, align: 'center'},
                             {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
-                            {text: '입사일자', dataIndex: 'ENT_DT', flex: 1, align: 'center'}
+                            {text: '입사일자', dataIndex: 'ENT_DT', flex: 1, align: 'center'},
+                            {
+                                text: '퇴사일자', dataIndex: 'RETIRE_DT', flex: 1, align: 'center'
+
+                            },
                         ]
                     },
                     listeners: {
@@ -95,7 +99,7 @@ Ext.define('Encore.mng.view.employ.Employ', {
                                 // height: 200,
                                 // width: 250,
                                 items: [{
-                                    text:'Preview',
+                                    text: 'Preview',
                                     handler: function () {
                                         //code...
                                     }
@@ -104,14 +108,284 @@ Ext.define('Encore.mng.view.employ.Employ', {
                             e.stopEvent();
                             contextMenu.showAt(e.getXY());
                         },
-                        itemdblclick: 'onItemdblclick'
+                        // itemdblclick: 'onItemdblclick'
                     }
                 },
-                {
-                    xtype: 'panel',
-                    title: '개별손익',
-                    html: '개인매출액'
-                }
+                // {
+                //     xtype: 'panel',
+                //     region: 'center',
+                //     layout: 'border',
+                //     collapsible: true,
+                //     split: true,
+                //     header: false,
+                //     title: '개인별 매출액',
+                //     flex: 2,
+                //     items: [
+                //         {
+                //             xtype: 'grid',
+                //             region: 'center',
+                //             itemId: 'projEmpWorkGrid',
+                //             reference: 'projEmpWorkGrid',
+                //             // collapsible: true,
+                //             // split: true,
+                //             // header: false,
+                //             flex: 2,
+                //             emptyText: Ext.String
+                //                 .format(
+                //                     '<div style="display: table; width: 100%; height: 99%; #position: relative; overflow: hidden;">'
+                //                     + '<div style="#position: absolute; #top: 50%; display: table-cell; vertical-align: middle; text-align: center;">'
+                //                     + '<div style="#position: relative; #top: -50%;font-size:12px;">{0}</div>'
+                //                     + '</div>' + '</div>', '프로젝트를 선택해 주세요'),
+                //             loadingText: 'loading',
+                //             tbar: [
+                //                 {
+                //                     xtype: 'button',
+                //                     text: '새로고침',
+                //                     handler: 'onReload2'
+                //                 },
+                //                 {
+                //                     fieldLabel: '이름',
+                //                     labelWidth: 45,
+                //                     xtype: 'textfield',
+                //                     width: 250,
+                //                     emptyText: '이름',
+                //                     listeners: {
+                //                         specialKey: function (field, e) {
+                //                             if (e.getKey() == e.ENTER) {
+                //                                 console.log('enter');
+                //                                 // me.membGrid.down('#searchBtn').fireEvent('click');
+                //                             }
+                //                         }
+                //                     }
+                //                 },
+                //                 {
+                //                     xtype: 'button',
+                //                     itemId: 'btnSearch',
+                //                     text: '검색',
+                //                     disabled: false,
+                //                     handler: 'onSearch'
+                //                 },
+                //             ],
+                //             bind: {
+                //                 store: '{projEmpWorkSumStore}'
+                //             },
+                //             viewConfig: {
+                //                 stripeRows: false,
+                //                 columnLines: true,
+                //             },
+                //             features: [{
+                //                 ftype: 'summary'
+                //             }],
+                //             columns: {
+                //                 defaults: {menuDisabled: true},
+                //                 items: [
+                //                     {
+                //                         text: 'EMP_ID',
+                //                         dataIndex: 'EMP_ID',
+                //                         hidden: true,
+                //                         hideable: false,
+                //                         locked: true
+                //                     },
+                //                     {
+                //                         xtype: 'rownumberer',
+                //                         width: 40,
+                //                         sortable: false,
+                //                     },
+                //                     {
+                //                         text: '사번', dataIndex: 'EMP_NO', width: 50, align: 'center'
+                //                         , locked: true
+                //                     },
+                //                     {
+                //                         text: '이름', dataIndex: 'EMP_NM', width: 70, align: 'center'
+                //                         , locked: true
+                //                     },
+                //                     {
+                //                         text: '입사일자', dataIndex: 'ENT_DT', width: 90, align: 'center'
+                //                         , locked: true
+                //                     },
+                //                     {
+                //                         text: '퇴사일자', dataIndex: 'RETIRE_DT', width: 90, align: 'center'
+                //                         , locked: true
+                //                     },
+                //                     {
+                //                         text: '부서', dataIndex: 'DEPT', width: 70, align: 'center'
+                //                         , locked: true
+                //                     },
+                //                     {
+                //                         text: '직급', dataIndex: 'MNG_LVL', width: 70, align: 'center'
+                //                         , locked: true
+                //                     },
+                //                     // {text: '역할', dataIndex: 'MNG_LVL', width: 60, align: 'center'
+                //                     // , locked: true
+                //                     // },
+                //                     {text: '단가', dataIndex: 'EMP_PRICE', width: 80, align: 'center'},
+                //                     // {
+                //                     //     text: '기본자질',
+                //                     //     dataIndex: 'BASIC_QUAL',
+                //                     //     width: 80,
+                //                     // }, {
+                //                     //     text: '직무수행능력',
+                //                     //     dataIndex: 'JOB_SKILL',
+                //                     //     width: 100,
+                //                     // }, {
+                //                     //     text: '직무수행태도',
+                //                     //     dataIndex: 'OFFCE_ATTUDE',
+                //                     //     width: 100,
+                //                     // },
+                //                     {
+                //                         text: '1월',
+                //                         dataIndex: 'M01',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '2월',
+                //                         dataIndex: 'M02',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '3월',
+                //                         dataIndex: 'M03',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '4월',
+                //                         dataIndex: 'M04',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '5월',
+                //                         dataIndex: 'M05',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '6월',
+                //                         dataIndex: 'M06',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '7월',
+                //                         dataIndex: 'M07',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '8월',
+                //                         dataIndex: 'M08',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '9월',
+                //                         dataIndex: 'M09',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '10월',
+                //                         dataIndex: 'M10',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '11월',
+                //                         dataIndex: 'M11',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                     {
+                //                         text: '12월',
+                //                         dataIndex: 'M12',
+                //                         width: 60,
+                //                         align: 'center',
+                //                         type: 'float',
+                //                         summaryType: 'sum',
+                //                         summaryRenderer: function (value, summaryData, dataIndex) {
+                //                             return value;
+                //                         }
+                //                     },
+                //                 ]
+                //             },
+                //             listeners: {
+                //                 itemcontextmenu: function (grid, record, item, index, e) {
+                //                     var contextMenu = Ext.create('Ext.menu.Menu', {
+                //                         // height: 200,
+                //                         // width: 250,
+                //                         items: [{
+                //                             text: 'Preview',
+                //                             handler: function () {
+                //                                 //code...
+                //                             }
+                //                         }]
+                //                     });
+                //                     e.stopEvent();
+                //                     contextMenu.showAt(e.getXY());
+                //                 },
+                //                 itemdblclick: 'onItemdblclick'
+                //             }
+                //         }
+                //     ]
+                // },
             ]
         }
 
