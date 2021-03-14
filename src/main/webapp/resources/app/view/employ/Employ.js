@@ -114,7 +114,7 @@ Ext.define('Encore.mng.view.employ.Employ', {
                             e.stopEvent();
                             contextMenu.showAt(e.getXY());
                         },
-                        // itemdblclick: 'onItemdblclick'
+                        itemdblclick: 'onItemdblclick'
                     }
                 },
                 // {

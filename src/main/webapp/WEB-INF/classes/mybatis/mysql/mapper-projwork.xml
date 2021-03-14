@@ -61,16 +61,16 @@
 	
 	<update id="updateEmp" parameterType="hashmap">
 		UPDATE /* employ.updateEmp */
-			   TB_EMP
-		   SET EMAIL = IFNULL(#{EMAIL}, EMAIL)
-		      ,PASSWD = IFNULL(#{PASSWD}, PASSWD)
-		      ,EMP_NM = IFNULL(#{EMP_NM}, EMP_NM)
-		      ,EMP_NO = IFNULL(#{EMP_NO}, EMP_NO)
-		      ,MNG_LVL = IFNULL(#{MNG_LVL}, MNG_LVL)
-			  ,ENT_DT = IFNULL(#{ENT_DT}, ENT_DT)
-		      ,MOD_DTM = NOW()
-		 WHERE 1 = 1
-		   AND EMP_ID = #{EMP_ID}
+			TB_EMP
+		SET EMAIL = IFNULL(CASE WHEN #{EMAIL} = '' THEN NULL ELSE #{EMAIL} END, EMAIL)
+		  ,PASSWD = IFNULL(CASE WHEN #{PASSWD} = '' THEN NULL ELSE #{PASSWD} END, PASSWD)
+		  ,EMP_NM = IFNULL(CASE WHEN #{EMP_NM} = '' THEN NULL ELSE #{EMP_NM} END, EMP_NM)
+		  ,EMP_NO = IFNULL(CASE WHEN #{EMP_NO} = '' THEN NULL ELSE #{EMP_NO} END, EMP_NO)
+		  ,MNG_LVL = IFNULL(CASE WHEN #{MNG_LVL} = '' THEN NULL ELSE #{MNG_LVL} END, MNG_LVL)
+		  ,ENT_DT = IFNULL(CASE WHEN #{ENT_DT} = '' THEN NULL ELSE #{ENT_DT} END, ENT_DT)
+		  ,MOD_DTM = NOW()
+		WHERE 1 = 1
+		  AND EMP_ID = #{EMP_ID}
 	</update>
 
 	<delete id="deleteProjWork" parameterType="hashmap">

@@ -104,6 +104,13 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     + '<div style="#position: relative; #top: -50%;font-size:12px;">{0}</div>'
                                                     + '</div>' + '</div>', '프로젝트를 선택해 주세요'),
                                             loadingText: 'loading',
+                                            plugins: {
+                                                ptype: 'cellediting',
+                                                clicksToEdit: 2,
+                                                listeners: {
+                                                    edit: 'onCellUpdate'
+                                                }
+                                            },
                                             tbar: [
                                                 {
                                                     fieldLabel: '이름',
@@ -170,10 +177,10 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     {text: '직급', dataIndex: 'MNG_LVL', flex: 1, align: 'center'},
                                                     {
                                                         text: '역할', dataIndex: 'PROJ_ROLE', flex: 1, align: 'center',
-                                                        // renderer : function(value, meta, record) {
-                                                        //     meta.style = "background-color:#f0f5f5;";
-                                                        //     return value;
-                                                        // },
+                                                        renderer : function(value, meta, record) {
+                                                            meta.style = "background-color:#f5f5f0;";
+                                                            return value;
+                                                        },
                                                         editor: new Ext.form.field.ComboBox({
                                                             typeAhead: true,
                                                             triggerAction: 'all',
@@ -198,10 +205,10 @@ Ext.define('Encore.mng.view.project.Project', {
                                                         format: 'Y-m-d',
                                                         flex: 1,
                                                         align: 'center',
-                                                        // renderer : function(value, meta, record) {
-                                                        //     meta.style = "background-color:#f0f5f5;";
-                                                        //     return value;
-                                                        // },
+                                                        renderer : function(value, meta, record) {
+                                                            meta.style = "background-color:#f5f5f0;";
+                                                            return Ext.util.Format.date(value, 'Y-m-d');
+                                                        },
                                                         editor: {
                                                             field: {
                                                                 xtype: 'datefield',
@@ -218,10 +225,10 @@ Ext.define('Encore.mng.view.project.Project', {
                                                         xtype: 'datecolumn',
                                                         format: 'Y-m-d',
                                                         align: 'center',
-                                                        // renderer : function(value, meta, record) {
-                                                        //     meta.style = "background-color:#f0f5f5;";
-                                                        //     return value;
-                                                        // },
+                                                        renderer : function(value, meta, record) {
+                                                            meta.style = "background-color:#f5f5f0;";
+                                                            return Ext.util.Format.date(value, 'Y-m-d');
+                                                        },
                                                         editor: {
                                                             field: {
                                                                 xtype: 'datefield',
@@ -248,7 +255,7 @@ Ext.define('Encore.mng.view.project.Project', {
                                                     e.stopEvent();
                                                     contextMenu.showAt(e.getXY());
                                                 },
-                                                itemdblclick: 'onItemdblclick'
+                                                // itemdblclick: 'onItemdblclick'
                                             }
                                         }
                                     ]
@@ -404,7 +411,7 @@ Ext.define('Encore.mng.view.project.Project', {
                                                         width: 100,
                                                         align: 'center',
                                                         renderer : function(value, meta, record) {
-                                                            meta.style = "background-color:#f0f5f5;";
+                                                            meta.style = "background-color:#f5f5f0;";
                                                             return value;
                                                         },
                                                         editor: new Ext.form.field.ComboBox({
@@ -432,7 +439,7 @@ Ext.define('Encore.mng.view.project.Project', {
                                                         width: 100,
                                                         align: 'center',
                                                         renderer : function(value, meta, record) {
-                                                            meta.style = "background-color:#f0f5f5;";
+                                                            meta.style = "background-color:#f5f5f0;";
                                                             return value;
                                                         },
                                                         editor: new Ext.form.field.ComboBox({
